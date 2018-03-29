@@ -8,7 +8,6 @@ import java.util.Properties;
 public class DataSource {
 
     private Connection connection;
-    private String test;
 
     /**
      * Returns a connection to the database

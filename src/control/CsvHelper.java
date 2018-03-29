@@ -63,7 +63,9 @@ public class CsvHelper {
                                 contrasto, temperatura);
                         arr.add(f);
                     }
+
                     d.insert(arr);
+
                     } catch(FileNotFoundException e){
                         e.printStackTrace();
                     } catch(IOException e){

@@ -1,6 +1,6 @@
 package control;
 
-public class InsertFile {
+public class FileHandler {
 
     public void insert(String type, String filePath) {
 
