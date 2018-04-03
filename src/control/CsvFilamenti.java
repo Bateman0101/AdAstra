@@ -53,10 +53,10 @@ public class CsvFilamenti {
                                 Double.parseDouble(row[5]), Double.parseDouble(row[6]), row[7], row[8]);
                         System.out.println("INSERITO IN DB IL FILAMENTO " + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
                                 row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + row[8]);
+                    }else {
+                        System.out.println("CHECKING IN DB IF FILAMENTI ARE PRESENT YET");
                     }
                 }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();

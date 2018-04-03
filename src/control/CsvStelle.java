@@ -36,14 +36,18 @@ public class CsvStelle {
                 if (!row[0].equals("IDSTAR")) {
                     if(!pD.isPresentPunto(Double.parseDouble(row[3]),Double.parseDouble(row[2]))){
                         pD.insertPunto(Double.parseDouble(row[3]),Double.parseDouble(row[2]));
-                        System.out.println("INSERT PUNTO (" + Double.parseDouble(row[3])
-                         + Double.parseDouble(row[2]) + ") IN DB");
+                        System.out.println("INSERT PUNTO (" + Double.parseDouble(row[3]) + " , " +
+                         Double.parseDouble(row[2]) + ") IN DB");
+                    }else {
+                        System.out.println("CHECKING IN DB IF PUNTO ARE PRESENT YET");
                     }
                     if(!sD.isPresentStella(Integer.parseInt(row[0]))){
                         sD.insertStella(Integer.parseInt(row[0]), row[1], row[5], Double.parseDouble(row[3]), row[4],
                                 "Herschel", Double.parseDouble(row[3]), Double.parseDouble(row[2]));
                         System.out.println("INSERT STELLA (" + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
                                 row[4] + " | " + row[5] + ") IN DB");
+                    }else {
+                        System.out.println("CHECKING IN DB IF STELLE ARE PRESENT YET");
                     }
                 }
                 /*System.out.println(row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +

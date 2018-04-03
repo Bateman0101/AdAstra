@@ -1,12 +1,7 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
-import dao.PuntoDao;
-import entity.Punto;
 
 public class StellaDao extends AbstractDao {
 
@@ -65,11 +60,14 @@ public class StellaDao extends AbstractDao {
     }
 
     public static void main(String[] args) {
-        StellaDao sD = new StellaDao();
+        //StellaDao sD = new StellaDao();
         //sD.insertStella(10, "splendente", "brilla", 2.588,
            //     "MIPS", "Spitzer", 1, 1);
 
-        boolean b = sD.isPresentStella(25646);
-        System.out.println(b);
+        //boolean b = sD.isPresentStella(25646);
+        //System.out.println(b);
+        String str = "2015-03-31";
+        Date date = Date.valueOf(str);//converting string into sql date
+        System.out.println(date);
     }
 }
