@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FilamentoDao {
+public class FilamentoDao extends AbstractDao {
 
     private static final String TABLE_NAME = "filamento";
     private static final String COLUMN_ID = "id";
@@ -59,7 +59,14 @@ public class FilamentoDao {
         }
 
     }
-/*
+
+    public Boolean isPresentFilamento(int id, String satellite){
+        String sql = "SELECT from " + TABLE_NAME + " WHERE " +
+                COLUMN_ID + " = '" + id + " AND " + COLUMN_SATELLITE +
+                " = '" + satellite + "'";
+        return this.isPresent(sql);
+    }
+
     public void insert(ArrayList<Filamento> f) {
 
         DataSource ds = new DataSource();
@@ -91,7 +98,7 @@ public class FilamentoDao {
                 e.printStackTrace();
             }
 
-        }*/
+        }
 
 
     public static void main(String[] args) {

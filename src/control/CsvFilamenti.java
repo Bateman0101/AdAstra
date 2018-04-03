@@ -48,12 +48,15 @@ public class CsvFilamenti {
 
                 String[] row = line.split(cvsSplitBy);
                 if (!row[0].equals("IDFIL")) {
-                    fD.insertFil(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
-                            Double.parseDouble(row[5]), Double.parseDouble(row[6]), row[7], row[8]);
+                    if(!fD.isPresentFilamento(Integer.parseInt(row[0]), row[8])) {
+                        fD.insertFil(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
+                                Double.parseDouble(row[5]), Double.parseDouble(row[6]), row[7], row[8]);
+                        System.out.println("INSERITO IN DB IL FILAMENTO " + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
+                                row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + row[8]);
+                    }
                 }
 
-                System.out.println(row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
-                        row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + row[8]);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
