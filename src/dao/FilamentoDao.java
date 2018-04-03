@@ -45,8 +45,8 @@ public class FilamentoDao {
                     "'" + ellitticita + "', " +
                     "'" + contrasto + "', " +
                     "'" + temperatura + "', " +
-                    "'" + strumento + "', " +
-                    "'" + satellite + "')";
+                    "'" + satellite + "', " +
+                    "'" + strumento + "')";
 
             //stmt.executeUpdate(sql);
             //stmt.close();
@@ -59,7 +59,7 @@ public class FilamentoDao {
         }
 
     }
-
+/*
     public void insert(ArrayList<Filamento> f) {
 
         DataSource ds = new DataSource();
@@ -68,7 +68,7 @@ public class FilamentoDao {
             PreparedStatement stmt = null;
           for (int i = 0; i < f.size(); i++) {
 
-/*
+
               String sql = "insert into " + TABLE_NAME + " values(?,?,?,?,?,?,?,?,?)";
               stmt = c.prepareStatement(sql);
               stmt.setInt(1, f.get(i).getId());
@@ -82,7 +82,7 @@ public class FilamentoDao {
               stmt.setDouble(9, f.get(i).getTemperatura());
 
               stmt.executeUpdate();
-*/
+
           }
           stmt.close();
           c.close();
@@ -91,7 +91,7 @@ public class FilamentoDao {
                 e.printStackTrace();
             }
 
-        }
+        }*/
 
 
     public static void main(String[] args) {
