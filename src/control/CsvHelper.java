@@ -28,8 +28,8 @@ public class CsvHelper {
                 String strumento;
                 String satellite;
                 String flusso;
-                String densità;
-                double ellitticità;
+                String densita;
+                double ellitticita;
                 double contrasto;
                 double temperatura;
 
@@ -52,18 +52,20 @@ public class CsvHelper {
                         strumento = list[7];
                         satellite = list[8];
                         flusso = list[2];
-                        densità = list[3];
-                        ellitticità = Double.parseDouble(list[5]);
+                        densita = list[3];
+                        ellitticita = Double.parseDouble(list[5]);
                         contrasto = Double.parseDouble(list[6]);
                         temperatura = Double.parseDouble(list[4]);
 
                         System.out.println("ID " + id + " nome " + list[1]);
 
-                        Filamento f = new Filamento (id, nome, strumento, satellite, flusso, densità, ellitticità,
+                        Filamento f = new Filamento (id, nome, strumento, satellite, flusso, densita, ellitticita,
                                 contrasto, temperatura);
                         arr.add(f);
                     }
+
                     d.insert(arr);
+
                     } catch(FileNotFoundException e){
                         e.printStackTrace();
                     } catch(IOException e){

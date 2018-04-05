@@ -4,26 +4,28 @@ public class Filamento {
 
     private int id;
     private String nome;
+    private String strumento;
+    private String satellite;
+    private String flusso;
+    private String densita;
+    private double ellitticita;
+    private double contrasto;
+    private double temperatura;
 
-    public Filamento(int id, String nome, String strumento, String satellite, String flusso, String densità, double ellitticità, double contrasto, double temperatura) {
+
+    public Filamento(int id, String nome, String strumento, String satellite, String flusso, String densita, double ellitticita, double contrasto, double temperatura) {
         this.id = id;
         this.nome = nome;
         this.strumento = strumento;
         this.satellite = satellite;
         this.flusso = flusso;
-        this.densità = densità;
-        this.ellitticità = ellitticità;
+        this.densita = densita;
+        this.ellitticita = ellitticita;
         this.contrasto = contrasto;
         this.temperatura = temperatura;
     }
 
-    private String strumento;
-    private String satellite;
-    private String flusso;
-    private String densità;
-    private double ellitticità;
-    private double contrasto;
-    private double temperatura;
+
 
     public int getId() {
         return id;
@@ -66,19 +68,19 @@ public class Filamento {
     }
 
     public String getDensità() {
-        return densità;
+        return densita;
     }
 
     public void setDensità(String densità) {
-        this.densità = densità;
+        this.densita = densita;
     }
 
     public double getEllitticità() {
-        return ellitticità;
+        return ellitticita;
     }
 
     public void setEllitticità(double ellitticità) {
-        this.ellitticità = ellitticità;
+        this.ellitticita = ellitticita;
     }
 
     public double getContrasto() {
