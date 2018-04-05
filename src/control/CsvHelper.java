@@ -21,8 +21,7 @@ public class CsvHelper {
 
         switch (type) {
 
-            case "Filamento":
-
+            case "Filamento": {
                 int id;
                 String nome;
                 String strumento;
@@ -75,8 +74,88 @@ public class CsvHelper {
                         e.printStackTrace();
                     }
                 break;
+            }
+
+            case "Scheletro":
+            {
+                int idF;
+                int idS;
+                String tipo;
+                String satellite = nomeSatellite;
+                float latitudine;
+                float longitudine;
+                int num;
+                String flusso;
+
+                int n = 0;
+                int idSLast = 0;
+
+                ScheletroDao d = new ScheletroDao();
+                try {
+
+                    br = new BufferedReader(new FileReader(csvFile));
+                    while ((line = br.readLine()) != null) {
+                        if (n == 0) {
+                            n++;
+                        }
+                        else {
+                            String[] list = line.split(cvsSplitBy);
+
+                            idF = Integer.parseInt(list[0]);
+                            idS = Integer.parseInt(list[1]);
+                            tipo = list[2];
+                            latitudine = Float.parseFloat(list[4]);
+                            longitudine = Float.parseFloat(list[3]);
+                            num = Integer.parseInt(list[5]);
+                            flusso = list[6];
+                            try {
+                                d.insertPunto(longitudine, latitudine);
+                            } catch (SQLException e) {
+                                if (e.getErrorCode() == 1062) {
+                                    if (d.verificaPerimetro(latitudine, longitudine, idF, satellite)) {
+                                        //TODO messaggio errore(il punto appartine già al contorno dello stesso filamento)
+                                    } else {
+                                        continue;
+                                    }
+                                }
+                            }
+                            if (idS != idSLast) {
+                                idSLast = idS;
+                                try {
+                                    d.insertSegmento(idS, idF, satellite, tipo);
+                                } catch (SQLException e) {
+                                    if (e.getErrorCode() == 1062) {
+                                        continue;
+                                    }
+                                }
+                            }
+                            try {
+                                d.insertPuntoSegmento(longitudine, latitudine, idS, num, flusso);
+                            } catch (SQLException e){
+                                if(e.getErrorCode() == 1062) {
+                                    //TODO messaggio errore(il punto appartiene già allo scheletro di qualche filamento)
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (br != null) {
+                        try {
+                            br.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
             default:
                 return;
+
+
         }
     }
 }
