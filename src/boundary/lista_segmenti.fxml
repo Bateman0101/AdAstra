@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boundary.ListaSegmenti">
+   <children>
+      <TableView fx:id="dataBranch" prefHeight="400.0" prefWidth="211.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="109.5999755859375" text="ID">
+              <cellValueFactory>
+                  <javafx.scene.control.cell.PropertyValueFactory property="id" />
+              </cellValueFactory>
+          </TableColumn>
+          <TableColumn fx:id="typeColumn" prefWidth="98.4000244140625" text="Tipo">
+              <cellValueFactory>
+                  <javafx.scene.control.cell.PropertyValueFactory property="tipo" />
+              </cellValueFactory>
+          </TableColumn>
+        </columns>
+      </TableView>
+      <Button fx:id="distanceBtn" layoutX="416.0" layoutY="143.0" mnemonicParsing="false" onAction="#distanceBtn" text="Distanza dal contorno" />
+      <TextField fx:id="nomeFil" layoutX="336.0" layoutY="38.0" />
+      <TextField fx:id="idFil" layoutX="336.0" layoutY="64.0" />
+      <TextField fx:id="satellite" layoutX="336.0" layoutY="90.0" />
+      <Text layoutX="273.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
+      <Text layoutX="273.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
+      <Text layoutX="273.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Satellite:" />
+      <TextField fx:id="idSegmento" layoutX="273.0" layoutY="143.0" prefHeight="31.0" prefWidth="143.0" promptText="ID segmentoAdam" />
+      <Text layoutX="276.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estremo Inferiore: " />
+      <Text layoutX="276.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estremo Superiore: " />
+      <Text fx:id="distanceInf" layoutX="405.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.98876684904099" />
+      <Text fx:id="distanceSup" layoutX="416.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.98877131938934" />
+   </children>
+</AnchorPane>
