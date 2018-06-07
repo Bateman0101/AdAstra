@@ -64,12 +64,12 @@ public abstract class AbstractDao {
      * @return Boolean
      */
 
-    protected Boolean isPresent(String sql) {
+    protected Boolean isPresent(String sql, Connection c) {
         Boolean bool = false;
         Statement s = null;
         ResultSet rs = null;
-        DataSource ds = new DataSource();
-        Connection c = ds.getConnection();
+        //DataSource ds = new DataSource();
+        //Connection c = ds.getConnection();
         try {
             s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = s.executeQuery(sql);
@@ -81,7 +81,7 @@ public abstract class AbstractDao {
         } finally {
             this.closeResultSet(rs);
             this.closeStatement(s);
-            ds.closeConnection(c);
+            //ds.closeConnection(c);
         }
         return bool;
     }

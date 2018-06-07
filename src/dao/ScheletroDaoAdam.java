@@ -2,7 +2,7 @@ package dao;
 
 import java.sql.*;
 
-public class ScheletroDao {
+public class ScheletroDaoAdam {
     public void insertPunto(float lon, float lat) throws SQLException {
 
         PreparedStatement stmt;

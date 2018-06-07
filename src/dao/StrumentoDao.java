@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/*
 public class StrumentoDao extends AbstractDao {
 
     private static final String TABLE_NAME = "strumento";
@@ -44,5 +44,5 @@ public class StrumentoDao extends AbstractDao {
                 COLUMN_NOME + " = '" + nome + "'";
         return this.isPresent(sql);
     }
+}*/
 
-}
