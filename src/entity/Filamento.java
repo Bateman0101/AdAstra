@@ -67,19 +67,19 @@ public class Filamento {
         this.flusso = flusso;
     }
 
-    public String getDensità() {
+    public String getDensita() {
         return densita;
     }
 
-    public void setDensità(String densità) {
+    public void setDensita(String densità) {
         this.densita = densita;
     }
 
-    public double getEllitticità() {
+    public double getEllitticita() {
         return ellitticita;
     }
 
-    public void setEllitticità(double ellitticità) {
+    public void setEllitticita(double ellitticita) {
         this.ellitticita = ellitticita;
     }
 

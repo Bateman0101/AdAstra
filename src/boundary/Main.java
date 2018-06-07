@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("insertFile.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ricerca.fxml"));
 
         primaryStage.setScene(new Scene(root, 800, 500));
         primaryStage.show();
@@ -23,3 +23,7 @@ public class Main extends Application {
         launch(args);
     }
 }
+
+
+
+

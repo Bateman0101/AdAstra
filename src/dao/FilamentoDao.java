@@ -83,8 +83,8 @@ public class FilamentoDao extends AbstractDao {
               stmt.setString(3, f.get(i).getStrumento());
               stmt.setString(4, f.get(i).getSatellite());
               stmt.setString(5, f.get(i).getFlusso());
-              stmt.setString(6, f.get(i).getDensità());
-              stmt.setDouble(7, f.get(i).getEllitticità());
+              stmt.setString(6, f.get(i).getDensita());
+              stmt.setDouble(7, f.get(i).getEllitticita());
               stmt.setDouble(8, f.get(i).getContrasto());
               stmt.setDouble(9, f.get(i).getTemperatura());
 

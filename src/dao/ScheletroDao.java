@@ -9,7 +9,7 @@ public class ScheletroDao {
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
 
-        String sql = "INSERT INTO PUNTO(LONGITUDINE, LATITUDINE)" +
+        String sql = "INSERT INTO PUNTO(LONGITUDINE, LATITUDINE) " +
                      "VALUES(?,?)";
 
         stmt = c.prepareStatement(sql);
@@ -25,7 +25,7 @@ public class ScheletroDao {
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
 
-        String sql = "INSERT INTO SEGMENTO(ID, TIPO, SATELLITE, FILAMENTO)" +
+        String sql = "INSERT INTO SEGMENTO(ID, TIPO, SATELLITE, FILAMENTO) " +
                      "VALUES(?,?,?,?)";
 
         stmt = c.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class ScheletroDao {
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
 
-        String sql = "INSERT INTO PUNTO_SEGMENTO(LATITUDINE, LONGITUDINE, SEGMENTO, NUMERO, FLUSSO)" +
+        String sql = "INSERT INTO PUNTO_SEGMENTO(LATITUDINE, LONGITUDINE, SEGMENTO, NUMERO, FLUSSO) " +
                      "VALUES(?,?,?,?,?)";
 
         stmt = c.prepareStatement(sql);
@@ -61,8 +61,8 @@ public class ScheletroDao {
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
 
-        String sql = "SELECT *" +
-                     "FROM PERIMETRO" +
+        String sql = "SELECT * " +
+                     "FROM PERIMETRO " +
                      "WHERE LATITUDINE = ? AND LONGITUDINE = ? AND FILAMENTO = ? AND SATELLITE = ?";
 
         stmt = c.prepareStatement(sql);
