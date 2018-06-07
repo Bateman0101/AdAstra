@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class ReadConfig {
 
-    private static final String FILE = "C:\\Users\\adam_\\IdeaProjects\\AdAstra\\config.properties";
+    private static final String FILE = "C:\\Projects\\AdAstra\\config.properties";
     private static Properties properties;
     private FileInputStream fileInputStream;
     private static ReadConfig instance = null;

@@ -12,8 +12,72 @@ public class Stella {
     private double longitudine;
 
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public double getFlusso() {
+        return flusso;
+    }
+
+    public void setFlusso(double flusso) {
+        this.flusso = flusso;
+    }
+
+    public String getStrumento() {
+        return strumento;
+    }
+
+    public void setStrumento(String strumento) {
+        this.strumento = strumento;
+    }
+
+    public String getSatellite() {
+        return satellite;
+    }
+
+    public void setSatellite(String satellite) {
+        this.satellite = satellite;
+    }
+
+    public double getLatitudine() {
+        return latitudine;
+    }
+
+    public void setLatitudine(double latitudine) {
+        this.latitudine = latitudine;
+    }
+
+    public double getLongitudine() {
+        return longitudine;
+    }
+
+    public void setLongitudine(double longitudine) {
+        this.longitudine = longitudine;
+    }
+
     public Stella(int id, String nome, String tipo, double flusso, String strumento,
-                  String satellite,double latitudine, double longitudine) {
+                  String satellite, double latitudine, double longitudine) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;

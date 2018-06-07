@@ -42,11 +42,11 @@ public class SatelliteDao extends AbstractDao {
             e.printStackTrace();
         }
     }
-
+/*
     public Boolean isPresentSatellite(String nome){
         String sql = "SELECT from " + TABLE_NAME + " WHERE " +
                 COLUMN_NOME + " = '" + nome + "'";
         return this.isPresent(sql);
     }
-
+*/
 }
