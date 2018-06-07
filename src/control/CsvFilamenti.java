@@ -1,8 +1,10 @@
 package control;
 
+import dao.DataSource;
 import dao.FilamentoDao;
 
 import java.io.*;
+import java.sql.Connection;
 
 public class CsvFilamenti {
 
@@ -18,8 +20,8 @@ public class CsvFilamenti {
     */
 
     public void insertFilamenti(String satellite) {
-        String csvFileSpitzer = "\\CSV Files\\filamenti_Spitzer.csv";
-        String csvFileHerschel = "\\CSV Files\\filamenti_Herschel.csv";
+        String csvFileSpitzer = "C:\\Projects\\AdAstra\\CSV Files\\filamenti_Spitzer.csv";
+        String csvFileHerschel = "C:\\Projects\\AdAstra\\CSV Files\\filamenti_Herschel.csv";
 
         switch (satellite) {
             case "Spitzer":
@@ -39,6 +41,8 @@ public class CsvFilamenti {
         String line;
         String cvsSplitBy = ",";
         FilamentoDao fD = new FilamentoDao();
+        DataSource dS = new DataSource();
+        Connection c = dS.getConnection();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
@@ -48,18 +52,20 @@ public class CsvFilamenti {
 
                 String[] row = line.split(cvsSplitBy);
                 if (!row[0].equals("IDFIL")) {
-                    if(!fD.isPresentFilamento(Integer.parseInt(row[0]), row[8])) {
+                    if(!fD.isPresentFilamento(Integer.parseInt(row[0]), row[7], c)) {
                         fD.insertFil(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
-                                Double.parseDouble(row[5]), Double.parseDouble(row[6]), row[7], row[8]);
+                                Double.parseDouble(row[5]), Double.parseDouble(row[6]), row[7], row[8], c);
                         System.out.println("INSERITO IN DB IL FILAMENTO " + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
                                 row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + row[8]);
                     }else {
-                        System.out.println("CHECKING IN DB IF FILAMENTI ARE PRESENT YET");
+                        System.out.println("FILAMENTO " + row[0] + " E' GIA' PRESENTE NEL DB");
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            dS.closeConnection(c);
         }
     }
 
@@ -73,7 +79,7 @@ public class CsvFilamenti {
             System.out.println(args[i]);
         }*/
         try {
-            cS.insertFilamenti(satellite1);
+            cS.insertFilamenti(satellite2);
         }catch (ArrayIndexOutOfBoundsException a){
             a.printStackTrace();
         }

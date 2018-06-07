@@ -1,11 +1,13 @@
 package control;
 
+import dao.DataSource;
 import dao.PerimetroDao;
 import dao.PuntoDao;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
 
 public class CsvPerimetro {
 
@@ -14,6 +16,8 @@ public class CsvPerimetro {
         String cvsSplitBy = ",";
         PerimetroDao perD = new PerimetroDao();
         PuntoDao pD = new PuntoDao();
+        DataSource dS = new DataSource();
+        Connection c = dS.getConnection();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
 
@@ -22,8 +26,8 @@ public class CsvPerimetro {
                 String[] row = line.split(cvsSplitBy);
 
                 if (!row[0].equals("IDFIL")) {
-                    if (!pD.isPresentPunto(Double.parseDouble(row[2]), Double.parseDouble(row[1]))) {
-                        pD.insertPunto(Double.parseDouble(row[2]), Double.parseDouble(row[1]));
+                    if (!pD.isPresentPunto(Double.parseDouble(row[2]), Double.parseDouble(row[1]), c)) {
+                        pD.insertPunto(Double.parseDouble(row[2]), Double.parseDouble(row[1]), c);
                         System.out.println("INSERT PUNTO (" + Double.parseDouble(row[2]) + " , "
                                 + Double.parseDouble(row[1]) + ") IN DB");
                     }else {
@@ -31,9 +35,9 @@ public class CsvPerimetro {
 
                     }
                     if (!perD.isPresentPerimetro(Double.parseDouble(row[2]), Double.parseDouble(row[1]),
-                            satellite, Integer.parseInt(row[0]))) {
-                        perD.insertPerimetro(Double.parseDouble(row[2]),
-                                Double.parseDouble(row[1]), satellite, Integer.parseInt(row[0]));
+                            satellite, Integer.parseInt(row[0]), c)) {
+                        perD.insertPuntoPerimetro(Double.parseDouble(row[2]),
+                                Double.parseDouble(row[1]), satellite, Integer.parseInt(row[0]), c);
                         System.out.println("INSERT PERIMETRO_" + satellite + " (" + Integer.parseInt(row[0]) + " , " + Double.parseDouble(row[1]) +
                                 " , " + row[2] + ") IN DB");
                     }else {
@@ -44,12 +48,14 @@ public class CsvPerimetro {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            dS.closeConnection(c);
         }
     }
 
     public static void main(String[] args) {
         CsvPerimetro cPer = new CsvPerimetro();
-        cPer.insert("CSV Files\\contorni_filamenti_Herschel.csv", "Herschel");
+        //cPer.insert("CSV Files\\contorni_filamenti_Herschel.csv", "Herschel");
         //cPer.insert("CSV Files\\contorni_filamenti_Spitzer.csv", "Spitzer");
     }
 }
