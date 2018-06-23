@@ -55,7 +55,7 @@ public class CsvPerimetro {
 
     public static void main(String[] args) {
         CsvPerimetro cPer = new CsvPerimetro();
-        //cPer.insert("CSV Files\\contorni_filamenti_Herschel.csv", "Herschel");
-        //cPer.insert("CSV Files\\contorni_filamenti_Spitzer.csv", "Spitzer");
+        //cPer.insert("/home/riccardo/Desktop/Basi di Dati/Progetto/ProgettoDb_TestDati(1)/Esame Basi Dati/contorni_filamenti_Herschel.csv", "Herschel");
+        cPer.insert("/home/riccardo/Desktop/Basi di Dati/Progetto/ProgettoDb_TestDati(1)/Esame Basi Dati/contorni_filamenti_Spitzer.csv", "Spitzer");
     }
 }

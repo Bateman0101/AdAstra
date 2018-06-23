@@ -25,7 +25,11 @@ public class Filamento {
         this.temperatura = temperatura;
     }
 
+    public Filamento(int id,String satellite) {
+        this.id = id;
+        this.satellite = satellite;
 
+    }
 
     public int getId() {
         return id;

@@ -10,8 +10,8 @@ public class PerimetroDao extends AbstractDao {
     private static final String TABLE_NAME = "perimetro";
     private static final String COLUMN_LATITUDINE = "latitudine";
     private static final String COLUMN_LONGITUDINE = "longitudine";
-    private static final String COLUMN_FILAMENTO_SATELLITE = "filamento_satellite";
-    private static final String COLUMN_FILAMENTO_ID = "filamento_id";
+    private static final String COLUMN_FILAMENTO_SATELLITE = "satellite";
+    private static final String COLUMN_FILAMENTO_ID = "filamento";
 
     @SuppressWarnings("Duplicates")
     public void insertPuntoPerimetro(double latitudine, double longitudine,
@@ -24,13 +24,13 @@ public class PerimetroDao extends AbstractDao {
             String sql = "insert into " + TABLE_NAME + "(" +
                     COLUMN_LATITUDINE + ", " +
                     COLUMN_LONGITUDINE + ", " +
-                    COLUMN_FILAMENTO_SATELLITE + ", " +
-                    COLUMN_FILAMENTO_ID + ")" +
+                    COLUMN_FILAMENTO_ID + ", " +
+                    COLUMN_FILAMENTO_SATELLITE + ")" +
                     " values(" +
                     "'" + latitudine + "', " +
                     "'" + longitudine + "', " +
-                    "'" + filamento_satellite + "', " +
-                    "'" + filamento_id + "')";
+                    "'" + filamento_id + "', " +
+                    "'" + filamento_satellite + "')";
 
             stmt = c.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             stmt.executeUpdate();

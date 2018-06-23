@@ -1,11 +1,10 @@
 package dao;
 
 import entity.Filamento;
+import entity.Perimetro;
+import entity.Punto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class FilamentoDao extends AbstractDao {
@@ -29,23 +28,23 @@ public class FilamentoDao extends AbstractDao {
             String sql = "insert into " + TABLE_NAME + "(" +
                     COLUMN_ID + ", " +
                     COLUMN_NOME + ", " +
+                    COLUMN_STRUMENTO + ", " +
+                    COLUMN_SATELLITE + "," +
                     COLUMN_FLUSSO + ", " +
                     COLUMN_DENSITA + ", " +
                     COLUMN_ELLITTICITA + ", " +
                     COLUMN_CONTRASTO + ", " +
-                    COLUMN_TEMPERATURA + ", " +
-                    COLUMN_STRUMENTO + ", " +
-                    COLUMN_SATELLITE + ")" +
+                    COLUMN_TEMPERATURA + ")" +
                     " values(" +
                     "'" + id + "', " +
                     "'" + nome + "', " +
+                    "'" + strumento + "', " +
+                    "'" + satellite + "', " +
                     "'" + flusso + "', " +
                     "'" + densita + "', " +
                     "'" + ellitticita + "', " +
                     "'" + contrasto + "', " +
-                    "'" + temperatura + "', " +
-                    "'" + satellite + "', " +
-                    "'" + strumento + "')";
+                    "'" + temperatura + "')";
 
             //stmt.executeUpdate(sql);
             //stmt.close();
@@ -59,6 +58,46 @@ public class FilamentoDao extends AbstractDao {
 
     }
 
+    public ArrayList<Filamento> findAll() {
+
+        DataSource ds = new DataSource();
+        Connection c = ds.getConnection();
+        ArrayList<Filamento> list = new ArrayList<>();
+
+        try {
+
+            Statement stmt = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+            String sql = "SELECT * FROM " + TABLE_NAME;
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String strumento = rs.getString("strumento");
+                String satellite = rs.getString("satellite");
+                String flusso = rs.getString("flusso");
+                String densita = rs.getString("densita");
+                Double ellitticita = rs.getDouble("ellitticita");
+                Double contrasto = rs.getDouble("contrasto");
+                Double temperatura= rs.getDouble("temperatura");
+
+
+                list.add(new Filamento(id, nome, strumento,
+                        satellite, flusso, densita, ellitticita,
+                        contrasto, temperatura));
+
+            }
+            c.close();
+        }
+        catch (SQLException e) {
+        e.printStackTrace();
+        }
+        System.out.println("LIST SIZE" + list.size());
+
+        return list;
+    }
+
     public Boolean isPresentFilamento(int id, String satellite, Connection c){
         String sql = "SELECT from " + TABLE_NAME + " WHERE " +
                 COLUMN_ID + " = '" + id + "'" + " AND " + COLUMN_SATELLITE +
@@ -66,6 +105,91 @@ public class FilamentoDao extends AbstractDao {
         return this.isPresent(sql, c);
     }
 
+    public ArrayList<Punto> findPerimeter(int id, String satellite) {
+
+        DataSource ds = new DataSource();
+        Connection c = ds.getConnection();
+        ArrayList<Punto> p = new ArrayList<>();
+
+        if (isPresentFilamento(id, satellite, c)) {
+
+            try {
+
+                PreparedStatement stmt = null;
+                ResultSet rs;
+                String sql = "SELECT *" +
+                        "FROM PERIMETRO " +
+                        "WHERE FILAMENTO = ? AND SATELLITE = ? ";
+                stmt = c.prepareStatement(sql);
+                stmt.setInt(1, id);
+                stmt.setString(2, satellite);
+
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    double lat = rs.getDouble("latitudine");
+                    double lon = rs.getDouble("longitudine");
+                    System.out.println(lat);
+                    p.add(new Punto(lat, lon));
+                }
+
+                rs.close();
+                stmt.close();
+                c.close();
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return p;
+
+
+    }
+
+    public ArrayList<Integer> findSegments(int id, String satellite) {
+
+        DataSource ds = new DataSource();
+        Connection c = ds.getConnection();
+        ArrayList<Integer> list= new ArrayList<>();
+
+        if (isPresentFilamento(id, satellite, c)) {
+
+            try {
+
+                PreparedStatement stmt = null;
+                ResultSet rs;
+                String sql = "SELECT *" +
+                        "FROM SEGMENTO " +
+                        "WHERE FILAMENTO = ? AND SATELLITE = ? ";
+                stmt = c.prepareStatement(sql);
+                stmt.setInt(1, id);
+                stmt.setString(2, satellite);
+
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    int num = rs.getInt("id");
+                    list.add(num);
+                }
+
+                rs.close();
+                stmt.close();
+                c.close();
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return list;
+
+
+    }
     public void insert(ArrayList<Filamento> f) {
 
         DataSource ds = new DataSource();

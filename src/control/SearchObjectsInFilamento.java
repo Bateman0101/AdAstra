@@ -57,7 +57,7 @@ public class SearchObjectsInFilamento {
                 double longPerSuc = pPerSuc.getLongitudine();
                 double latPerSuc = pPerSuc.getLatitudine();
 
-                result = +this.formula(longSte, latSte, longPer, latPer,
+                result += this.formula(longSte, latSte, longPer, latPer,
                         longPerSuc, latPerSuc);
 
                 System.out.println("result is " + result);
@@ -123,9 +123,8 @@ public class SearchObjectsInFilamento {
                 double longPerSuc = pPerSuc.getLongitudine();
                 double latPerSuc = pPerSuc.getLatitudine();
 
-                result = +this.formula(longSte, latSte, longPer, latPer,
+                result = this.formula(longSte, latSte, longPer, latPer,
                         longPerSuc, latPerSuc);
-
                 System.out.println("result is " + result);
                 //System.out.println("numPer " + numPer);
 

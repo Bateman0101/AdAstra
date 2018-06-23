@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boundary.InsertUtente.InsertUtenteBoundary">
+   <children>
+      <Label layoutX="31.0" layoutY="25.0" text="Inserimento nuovo utente">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="listTipo" layoutX="39.0" layoutY="254.0" prefHeight="26.0" prefWidth="205.0" promptText="Seleziona tipo di utente" />
+      <TextField fx:id="idEntry" layoutX="30.0" layoutY="91.0" prefHeight="26.0" prefWidth="247.0" promptText="Inserisci ID Utente (minimo 6 char)" />
+      <TextField fx:id="nomeEntry" layoutX="384.0" layoutY="91.0" prefHeight="26.0" prefWidth="123.0" promptText="nome" />
+      <TextField fx:id="cognomeEntry" layoutX="384.0" layoutY="143.0" prefHeight="26.0" prefWidth="123.0" promptText="cognome" />
+      <TextField fx:id="emailEntry" layoutX="384.0" layoutY="200.0" prefHeight="26.0" prefWidth="123.0" promptText="email" />
+      <PasswordField fx:id="passwordEntry" layoutX="30.0" layoutY="156.0" prefHeight="26.0" prefWidth="247.0" promptText="Inserisci password (minimo 6 char)" />
+      <Button onAction="#onSubmitPressed" layoutX="446.0" layoutY="300.0" mnemonicParsing="false" text="Submit" />
+      <Button onAction="#getHomePage" layoutX="507.0" layoutY="31.0" mnemonicParsing="false" text="Home" />
+   </children>
+</AnchorPane>

@@ -1,4 +1,4 @@
-package boundary;
+package boundary.InsertFile;
 
 import control.FileHandler;
 import javafx.collections.ObservableList;
@@ -55,4 +55,5 @@ public class InsertFileBoundary {
             setPath(file.getAbsolutePath());
         }
     }
+
 }

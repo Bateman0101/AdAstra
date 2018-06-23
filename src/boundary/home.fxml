@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boundary.HomePageBoundary">
+   <children>
+      <Label layoutX="237.0" layoutY="22.0" prefHeight="21.0" prefWidth="89.0" text="Ad Astra">
+         <font>
+            <Font name="System Bold Italic" size="17.0" />
+         </font>
+      </Label>
+      <Button fx:id="bSat" layoutX="418.0" layoutY="68.0" mnemonicParsing="false" onAction="#onSatellitePressed" prefHeight="26.0" prefWidth="146.0" text="Inserisci Satellite" />
+      <Button fx:id="bStrum" layoutX="418.0" layoutY="115.0" mnemonicParsing="false" onAction="#onStrumentoPressed" prefHeight="26.0" prefWidth="146.0" text="Inserisci Strumento" />
+      <Label layoutX="31.0" layoutY="73.0" text="Ricerca strutture estese:" />
+      <Button fx:id="button" layoutX="31.0" layoutY="115.0" mnemonicParsing="false" onAction="#onInfoPressed" prefHeight="26.0" prefWidth="195.0" text="Informazioni Filamenti" />
+      <Button layoutX="31.0" layoutY="161.0" mnemonicParsing="false" onAction="#onRegionPressed" prefHeight="26.0" prefWidth="195.0" text="Ricerca in una regione" />
+      <Button layoutX="31.0" layoutY="206.0" mnemonicParsing="false" onAction="#onStelleInFilPressed" prefHeight="26.0" prefWidth="195.0" text="Ricerca stelle in Filamento" />
+      <Button fx:id="bUtente" onAction="#onUtentePressed" layoutX="403.0" layoutY="168.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="176.0" text="Inserisci nuovo utente" />
+   </children>
+</AnchorPane>
