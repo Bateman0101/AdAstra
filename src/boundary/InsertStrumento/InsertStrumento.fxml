@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boundary.InsertStrumento.InsertStrumentoBoundary">
    <children>
-      <ComboBox fx:id="list" layoutX="43.0" layoutY="126.0" prefHeight="26.0" prefWidth="186.0" promptText="Seleziona Satellite..." />
       <TextField fx:id="name" layoutX="43.0" layoutY="217.0" prefHeight="26.0" prefWidth="153.0" promptText="Nome" />
       <TextField fx:id="bande" layoutX="271.0" layoutY="219.0" promptText="aa.a/bb.b/...." />
       <Label layoutX="43.0" layoutY="33.0" prefHeight="16.0" prefWidth="153.0" text="Inserisci Strumento" />
       <Label layoutX="271.0" layoutY="192.0" prefHeight="16.0" prefWidth="171.0" text="Inserisci bande" />
       <Label layoutX="43.0" layoutY="191.0" text="Inserisci Nome" />
       <Button fx:id="apply" layoutX="380.0" layoutY="298.0" mnemonicParsing="false" onAction="#onApply" text="Applica" />
-      <Button onAction="#getHomePage" layoutX="490.0" layoutY="36.0" mnemonicParsing="false" text="Home" />
+      <Button layoutX="490.0" layoutY="36.0" mnemonicParsing="false" onAction="#getHomePage" text="Home" />
+      <Label layoutX="43.0" layoutY="91.0" text="Inserisci Satellite" />
+      <TextField fx:id="satelliteEntry" layoutX="43.0" layoutY="124.0" prefHeight="26.0" prefWidth="153.0" promptText="Satellite" />
    </children>
 </AnchorPane>

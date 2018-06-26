@@ -1,7 +1,7 @@
 package boundary.InsertSatellite;
 
 import boundary.Main;
-import control.InsertHandler;
+import control.SatelliteHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -26,7 +26,7 @@ public class InsertSatelliteBoundary {
 
     public void onAdd(){
 
-        InsertHandler ctr = new InsertHandler();
+        SatelliteHandler ctr = new SatelliteHandler();
         ctr.insertSatellite(nome.getText(), startDate.getValue(), endDate.getValue(), agenzia.getText());
 
 
