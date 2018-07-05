@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boundary.ListaSegmenti">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boundary.SearchFilamento.ListaSegmenti">
    <children>
       <TableView fx:id="dataBranch" prefHeight="400.0" prefWidth="211.0">
         <columns>

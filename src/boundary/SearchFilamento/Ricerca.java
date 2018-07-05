@@ -1,18 +1,14 @@
-/**
- * Sample Skeleton for 'ricerca.fxml' Controller Class
- */
-
-package boundary;
+package boundary.SearchFilamento;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import boundary.messenger;
 import control.ControllerFil;
-import dao.RicercaSegmenti;
-import entity.SegmentoAdam;
+import entity.Segmento;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import entity.Filamento;
@@ -28,9 +24,9 @@ import javafx.stage.Stage;
 
 public class Ricerca {
 
-    List<Filamento> list = new ArrayList<Filamento>();
-    int num;
-    int i;
+    private List<Filamento> list = new ArrayList<>();
+    private int num;
+    private int i;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -129,7 +125,7 @@ public class Ricerca {
     private Text frazione; // Value injected by FXMLLoader
 
     @FXML
-    void back(ActionEvent event) {
+    void back() {
         if(i>1){
             while((num%20) != 0) num--;
             int limit = num;
@@ -149,7 +145,7 @@ public class Ricerca {
     }
 
     @FXML
-    void next(ActionEvent event) {
+    void next() {
         if(num < (list.size() - 1)){
             int limit = num + 21;
             int p = list.size()/20;
@@ -188,7 +184,7 @@ public class Ricerca {
     }
 
     @FXML
-    void search(ActionEvent event) {
+    void search() {
         try {
             data.getItems().clear();
             numElements.setText("");
@@ -199,100 +195,130 @@ public class Ricerca {
             int sup = Integer.parseInt(Sup.getText());
             ControllerFil source = new ControllerFil();
             list = source.ricercaNumS(inf, sup);
-            if (list != null) {
-                i = 1;
-                int p = list.size()/20;
-                if(list.size()%20 != 0) p++;
-                numElements.setText(list.size() + " elementi trovati.");
-                page.setText("pagina " +  i + " di " + p);
-                Filamento fil;
-                for (num = 0; num < Math.min(20, list.size()); num++) {
-                    fil = list.get(num);
-                    data.getItems().add(fil);
-                }
+            if (sup < inf + 3 && inf < sup) {
+                  messenger msg = new messenger();
+                  msg.messageOne("Errore - ricerca filementi per numero di segmenti",
+                                                                    "La dimensione dell'intervalo di ricerca deve essere uguale a 3 o superiore.");
+            }
+            if (sup <= inf) {
+                  messenger msg = new messenger();
+                  msg.messageOne("Errore - ricerca filementi per numero di segmenti",
+                                                       "L'estremo superiore dell'intervallo di ricerca deve essere maggiore di quello inferiore.");
+            }
+            if (sup < 0 || inf < 0) {
+                  messenger msg = new messenger();
+                  msg.messageOne("Errore - ricerca filementi per numero di segmenti", "I valori inseriti devono essere maggiori di 0.");
             } else {
-                if (sup < inf + 2) {
-                    System.out.println("");
-
+                if (list != null) {
+                    i = 1;
+                    int p = list.size() / 20;
+                    if (list.size() % 20 != 0) p++;
+                    numElements.setText(list.size() + " elementi trovati.");
+                    page.setText("pagina " + i + " di " + p);
+                    Filamento fil;
+                    for (num = 0; num < Math.min(20, list.size()); num++) {
+                        fil = list.get(num);
+                        data.getItems().add(fil);
+                    }
                 } else {
-                    //errore
+                    messenger msg = new messenger();
+                    msg.messageOne("Errore - ricerca filementi per numero di segmenti", "Nessun elemento trovato.");
                 }
             }
         } catch (NumberFormatException e) {
-            int x = 35/20;
-            System.out.println(x);
+            messenger msg = new messenger();
+            msg.messageOne("Errore - ricerca filementi per numero di segmenti","Inserire valori numerici.");
+        } catch (SQLException e) {
+            messenger msg = new messenger();
+            int error = e.getErrorCode();
+            msg.messageOne("Errore - ricerca filementi per numero di segmenti","Si è verificato un errore. Codice errore: " + error + ".");
         }
     }
 
     @FXML
-    void searchBranch(ActionEvent event) {
-        String satellite = sat.getText();
-        int idF = Integer.parseInt(idFil.getText());
-        URL url = getClass().getResource("lista_segmenti.fxml");
-        Stage stage = new Stage();
-        RicercaSegmenti source = new RicercaSegmenti();
-        int numS;
-        List<SegmentoAdam> listS;
-        listS = source.search(idF, satellite);
+    void searchBranch() {
         try {
-            SegmentoAdam seg;
-            AnchorPane anchor = FXMLLoader.load(url);
-            TableView tv = (TableView) anchor.lookup("#dataBranch");
-            TextField idFT = (TextField) anchor.lookup("#idFil");
-            idFT.setText(idFil.getText());
-            TextField satFT = (TextField) anchor.lookup("#satellite");
-            satFT.setText(sat.getText());
-            for(numS=0; numS < listS.size(); numS++){
-                seg = listS.get(numS);
-                tv.getItems().add(seg);
+            String satellite = sat.getText();
+            int idF = Integer.parseInt(idFil.getText());
+            URL url = getClass().getResource("lista_segmenti.fxml");
+            Stage stage = new Stage();
+            ControllerFil source = new ControllerFil();
+            int numS;
+            List<Segmento> listS;
+            listS = source.searchBranch(idF, satellite);
+            if(listS != null) {
+                Segmento seg;
+                AnchorPane anchor = FXMLLoader.load(url);
+                TableView<Segmento> tv = (TableView<Segmento>) anchor.lookup("#dataBranch");
+                TextField idFT = (TextField) anchor.lookup("#idFil");
+                idFT.setText(idFil.getText());
+                TextField satFT = (TextField) anchor.lookup("#satellite");
+                satFT.setText(sat.getText());
+                for (numS = 0; numS < listS.size(); numS++) {
+                    seg = listS.get(numS);
+                    tv.getItems().add(seg);
+                }
+                Scene scene = new Scene(anchor);
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                messenger msg = new messenger();
+                msg.messageOne("Errore - ricerca segmenti", "Nessun elemento trovato.");
             }
-            Scene scene = new Scene(anchor);
-            stage.setScene(scene);
-            stage.show();
         } catch(IOException e) {
-                e.printStackTrace();
+            messenger msg = new messenger();
+            msg.messageOne("Errore - ricerca segmenti","Si è verificato un errore.");
+        } catch(NumberFormatException e) {
+            messenger msg = new messenger();
+            msg.messageOne("Errore - ricerca segmenti","Inserire valori numerici nel campo ID Filamento.");
+        } catch(SQLException e) {
+            messenger msg = new messenger();
+            int error = e.getErrorCode();
+            msg.messageOne("Errore - ricerca segmenti","Si è verificato un errore. Codice errore: " + error + ".");
         }
-    }/*
+    }
     @FXML
-    void searchEll(ActionEvent event) {
+    void searchEll() {
         try {
             data.getItems().clear();
             numElements.setText("");
             page.setText("");
             i = 0;
             num = 0;
-
-            ControllerFil source = new ControllerFil();
-            list = source.ricercaEll();
-            int tot = source.getTot();
-            if (list != null) {
-                i = 1;
-                int p = list.size()/20;
-                if(list.size()%20 != 0) p++;
-                numElements.setText(list.size() + " elementi trovati su " + tot);
-                page.setText("pagina " + i + " di " + p);
-                Filamento fil;
-                for (num = 0; num < Math.min(20, list.size()); num++) {
-                    fil = list.get(num);
-                    data.getItems().add(fil);
-                }
+            Float inf = Float.parseFloat(ellInf.getText());
+            Float sup = Float.parseFloat(ellSup.getText());
+            if (inf < 2 || sup > 9) {
+                messenger msg = new messenger();
+                msg.messageOne("Errore - ricerca per ellitticità","L'intervallo deve essere compreso tra 1 e 10 esclusi.");
             } else {
-                int l;
-                if (l < 0) {
-                    System.out.println("");
-
-                } else {
-                    //errore
+                ControllerFil source = new ControllerFil();
+                list = source.ricercaEll(inf, sup);
+                int tot = source.getTot();
+                if (list != null) {
+                    i = 1;
+                    int p = list.size() / 20;
+                    if (list.size() % 20 != 0) p++;
+                    numElements.setText(list.size() + " elementi trovati su " + tot);
+                    page.setText("pagina " + i + " di " + p);
+                    Filamento fil;
+                    for (num = 0; num < Math.min(20, list.size()); num++) {
+                        fil = list.get(num);
+                        data.getItems().add(fil);
+                    }
                 }
             }
         } catch (NumberFormatException e) {
-            int x = 35/20;
-            System.out.println(x);
+            messenger msg = new messenger();
+            msg.messageOne("Errore - ricerca per ellitticità","Inserire valori numerici decimali per l'intervallo di ricerca.");
+        } catch (SQLException e) {
+            messenger msg = new messenger();
+            int error = e.getErrorCode();
+            msg.messageOne("Errore - ricerca per ellitticità","Si è verificato un errore. Codice errore: " + error + ".");
         }
     }
-*/
+
     @FXML
-    void searchLum(ActionEvent event) {
+    void searchLum() {
         try {
             data.getItems().clear();
             numElements.setText("");
@@ -301,30 +327,35 @@ public class Ricerca {
             num=0;
             ControllerFil source = new ControllerFil();
             float l = Float.parseFloat(lum.getText());
-            list = source.ricercaLum(l);
-            int tot = source.getTot();
-            if (list != null) {
-                i = 1;
-                int p = list.size()/20;
-                if(list.size()%20 != 0) p++;
-                numElements.setText(list.size() + " elementi trovati su " + tot);
-                page.setText("pagina " + i + " di " + p);
-                Filamento fil;
-                for (num = 0; num < Math.min(20, list.size()); num++) {
-                    fil = list.get(num);
-                    data.getItems().add(fil);
-                }
+            if (l < 0) {
+                messenger msg = new messenger();
+                msg.messageOne("Errore - ricerca per luminosità","Inserire valore numerico maggiore di 0 nel campo percentuale luminosità.");
             } else {
-                if (l < 0) {
-                    System.out.println("");
-
+                list = source.ricercaLum(l);
+                int tot = source.getTot();
+                if (list != null) {
+                    i = 1;
+                    int p = list.size()/20;
+                    if(list.size()%20 != 0) p++;
+                    numElements.setText(list.size() + " elementi trovati su " + tot);
+                    page.setText("pagina " + i + " di " + p);
+                    Filamento fil;
+                    for (num = 0; num < Math.min(20, list.size()); num++) {
+                        fil = list.get(num);
+                        data.getItems().add(fil);
+                    }
                 } else {
-                    //errore
+                    messenger msg = new messenger();
+                    msg.messageOne("Errore - ricerca per luminosità","Nessun elemento trovato.");
                 }
             }
         } catch (NumberFormatException e) {
-            int x = 35/20;
-            System.out.println(x);
+            messenger msg = new messenger();
+            msg.messageOne("Errore - ricerca per luminosità","Inserire valore numerico nel campo percentuale luminosità.");
+        } catch (SQLException e) {
+            messenger msg = new messenger();
+            int error = e.getErrorCode();
+            msg.messageOne("Errore - ricerca segmenti","Si è verificato un errore. Codice errore: " + error + ".");
         }
     }
 

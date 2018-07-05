@@ -12,6 +12,11 @@ public class Segmento {
         this.satellite = satellite;
     }
 
+    public Segmento(int id, String tipo) {
+        this.id = id;
+        this.tipo = tipo;
+    }
+
     public int getId() {
         return id;
     }
