@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Filamento;
-import entity.Perimetro;
 import entity.Punto;
 
 import java.sql.*;
@@ -20,6 +19,8 @@ public class FilamentoDao extends AbstractDao {
     private static final String COLUMN_STRUMENTO = "strumento";
     private static final String COLUMN_SATELLITE = "satellite";
 
+
+
     public void insertFil(int id, String nome, String flusso, String densita, double ellitticita,
                           double contrasto, double temperatura, String strumento, String satellite, Connection c){
 
@@ -28,28 +29,29 @@ public class FilamentoDao extends AbstractDao {
             String sql = "insert into " + TABLE_NAME + "(" +
                     COLUMN_ID + ", " +
                     COLUMN_NOME + ", " +
-                    COLUMN_STRUMENTO + ", " +
-                    COLUMN_SATELLITE + "," +
                     COLUMN_FLUSSO + ", " +
                     COLUMN_DENSITA + ", " +
                     COLUMN_ELLITTICITA + ", " +
                     COLUMN_CONTRASTO + ", " +
-                    COLUMN_TEMPERATURA + ")" +
+                    COLUMN_TEMPERATURA + ", " +
+                    COLUMN_STRUMENTO + ", " +
+                    COLUMN_SATELLITE + ")" +
                     " values(" +
                     "'" + id + "', " +
                     "'" + nome + "', " +
-                    "'" + strumento + "', " +
-                    "'" + satellite + "', " +
                     "'" + flusso + "', " +
                     "'" + densita + "', " +
                     "'" + ellitticita + "', " +
                     "'" + contrasto + "', " +
-                    "'" + temperatura + "')";
+                    "'" + temperatura + "', " +
+                    "'" + satellite + "', " +
+                    "'" + strumento + "')";
 
             //stmt.executeUpdate(sql);
             //stmt.close();
             stmt = c.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             stmt.executeUpdate();
+
 
 
         }catch (Exception e){

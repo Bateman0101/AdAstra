@@ -25,7 +25,6 @@ public class FindInRegionBoundary {
     private TextField radiusEntry;
     @FXML
     private ComboBox<String> listRegion;
-
     @FXML
     private TableView<Filamento> tableEntry;
     @FXML

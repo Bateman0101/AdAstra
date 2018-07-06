@@ -111,6 +111,36 @@ public class StellaDao extends AbstractDao {
         return vec;
     }
 
+    public Stella getStella(double lat, double lon, Connection con) {
+        Statement s;
+        Stella st = null;
+        try {
+            s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT * FROM " + TABLE_NAME +
+                    " WHERE " + COLUMN_LATITUDINE + "='" + lat + " AND " + COLUMN_LONGITUDINE +
+                    "='" + lon + "'");
+            ResultSet rs = s.executeQuery(sql.toString());
+            while (rs.next()) {
+                try {
+                    st = new Stella(rs.getInt(COLUMN_ID),
+                            rs.getString(COLUMN_NOME),
+                            rs.getString(COLUMN_TIPO),
+                            rs.getDouble(COLUMN_FLUSSO),
+                            rs.getString(COLUMN_STRUMENTO),
+                            rs.getString(COLUMN_SATELLITE),
+                            rs.getDouble(COLUMN_LATITUDINE),
+                            rs.getDouble(COLUMN_LONGITUDINE));
+                } catch (NullPointerException n){
+                    n.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return st;
+    }
+
     public Boolean coordinateIntPresent(Integer lat, Integer lon, Connection c) {
         Statement s;
         Integer[] coordinate = new Integer[2];

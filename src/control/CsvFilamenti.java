@@ -20,8 +20,8 @@ public class CsvFilamenti {
     */
 
     public void insertFilamenti(String satellite) {
-        String csvFileSpitzer = "/home/riccardo/Desktop/Basi di Dati/Progetto/ProgettoDb_TestDati(1)/Esame Basi Dati/filamenti_Spitzer.csv";
-        String csvFileHerschel = "/home/riccardo/Desktop/Basi di Dati/Progetto/ProgettoDb_TestDati(1)/Esame Basi Dati/filamenti_Herschel.csv";
+        String csvFileSpitzer = "C:\\Projects\\AdAstra\\CSV Files\\filamenti_Spitzer.csv";
+        String csvFileHerschel = "C:\\Projects\\AdAstra\\CSV Files\\filamenti_Herschel.csv";
 
         switch (satellite) {
             case "Spitzer":
@@ -54,7 +54,7 @@ public class CsvFilamenti {
                 if (!row[0].equals("IDFIL")) {
                     if(!fD.isPresentFilamento(Integer.parseInt(row[0]), row[7], c)) {
                         fD.insertFil(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
-                                Double.parseDouble(row[5]), Double.parseDouble(row[6]), row[8], row[7], c);
+                                Double.parseDouble(row[5]), Double.parseDouble(row[6]),  row[7], row[8], c);
                         System.out.println("INSERITO IN DB IL FILAMENTO " + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
                                 row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + row[8]);
                     }else {

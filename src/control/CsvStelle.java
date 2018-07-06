@@ -70,7 +70,7 @@ public static void main(String[] args) {
             System.out.println(args[i]);
         }*/
         try {
-            cS.insert("/home/riccardo/Desktop/AdAstra/CSV Files/stelle_Herschel.csv");
+            cS.insert("CSV Files\\stelle_Herschel.csv");
         }catch (ArrayIndexOutOfBoundsException a){
             a.printStackTrace();
         }

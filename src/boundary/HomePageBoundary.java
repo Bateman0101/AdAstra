@@ -3,13 +3,17 @@ package boundary;
 import boundary.FindFilamento.MainFilamento;
 import boundary.FindInRegion.MainRegion;
 import boundary.FindStelleInFilamento.MainStellaInFilamento;
+import boundary.FindStelleRegioneFilamento.MainFindStelleRegioneFilamento;
+import boundary.InsertFile.MainInsertFile;
 import boundary.InsertSatellite.MainSatellite;
 import boundary.InsertStrumento.MainStrumento;
 import boundary.InsertUtente.InsertUtenteMain;
+import boundary.PosizioneStellaSpinaDorsale.MainPosizioneStellaSpinaDorsale;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+@SuppressWarnings("ALL")
 public class HomePageBoundary {
 
     @FXML
@@ -20,6 +24,8 @@ public class HomePageBoundary {
     private Button bStrum;
     @FXML
     private Button button;
+    @FXML
+    private Button inFileBtn;
 
     public static String tipo;
 
@@ -35,13 +41,24 @@ public class HomePageBoundary {
             bSat.setVisible(false);
             bStrum.setVisible(false);
             bUtente.setVisible(false);
+            inFileBtn.setVisible(false);
 
         }
 
     }
 
 
+    public void onInsertFilePressed(){
 
+        MainInsertFile c = new MainInsertFile();
+        try {
+            c.start(new Stage());
+            Stage stage = (Stage) button.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -98,6 +115,30 @@ public class HomePageBoundary {
             e.printStackTrace();
         }
 
+    }
+
+    public void onFindStelleRegioneFilamento() {
+
+        MainFindStelleRegioneFilamento m = new MainFindStelleRegioneFilamento();
+        try {
+            m.start(new Stage());
+            Stage stage = (Stage) button.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onPosizioneDiUnaStellaRispettoSpinaDorsale() {
+
+        MainPosizioneStellaSpinaDorsale m = new MainPosizioneStellaSpinaDorsale();
+        try {
+            m.start(new Stage());
+            Stage stage = (Stage) button.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void onStelleInFilPressed(){

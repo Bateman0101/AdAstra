@@ -11,7 +11,7 @@ public class SegmentoDao extends AbstractDao {
     private static final String TABLE_NAME = "segmento";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_TIPO = "tipo";
-    private static final String COLUMN_FILAMENTO_ID = "id_fil";
+    private static final String COLUMN_FILAMENTO_ID = "filamento";
     private static final String COLUMN_SATELLITE = "satellite";
 
     public void insertSegmento (int id, int id_fil, String tipo, String satellite, Connection con){
@@ -21,13 +21,13 @@ public class SegmentoDao extends AbstractDao {
             String sql = "insert into " + TABLE_NAME + "(" +
                     COLUMN_ID + ", " +
                     COLUMN_TIPO + ", " +
-                    COLUMN_FILAMENTO_ID + ", " +
-                    COLUMN_SATELLITE + "')" +
+                    COLUMN_SATELLITE + ", " +
+                    COLUMN_FILAMENTO_ID + ")" +
                     " values(" +
                     "'" + id + "', " +
                     "'" + tipo + "', " +
-                    "'" + id_fil + "', " +
-                    "'" + satellite + "')";
+                    "'" + satellite + "', " +
+                    "'" + id_fil + "')";
 
             stmt = con.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             stmt.executeUpdate();
@@ -43,6 +43,13 @@ public class SegmentoDao extends AbstractDao {
                 COLUMN_TIPO + " = '" + tipo + "'" + " AND " +
                 COLUMN_SATELLITE + " = '" + satellite + "'";
         return this.isPresent(sql, con);
+    }
+
+    public static void main(String[] args){
+        SegmentoDao sD = new SegmentoDao();
+        DataSource dS = new DataSource();
+        Connection con = dS.getConnection();
+        sD.insertSegmento(1,380, "spettacolo", "Spitzer", con);
     }
 
 }

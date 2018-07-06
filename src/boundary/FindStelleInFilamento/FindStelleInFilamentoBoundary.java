@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("ALL")
 public class FindStelleInFilamentoBoundary {
 
     @FXML

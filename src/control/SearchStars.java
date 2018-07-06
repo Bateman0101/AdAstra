@@ -7,6 +7,7 @@ import entity.PuntoPerimetro;
 import entity.Stella;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import static java.lang.Math.pow;
@@ -14,7 +15,7 @@ import static java.lang.Math.pow;
 @SuppressWarnings("Duplicates")
 public class SearchStars {
 
-    public Integer[] searchStarsRect(Double b, Double h, Double[] c) {
+    public Double[] searchStarsRect(Double b, Double h, Double[] c) {
 
         StellaDao sD = new StellaDao();
         PerimetroDao perD = new PerimetroDao();
@@ -23,18 +24,18 @@ public class SearchStars {
         Double[] coorSt = new Double[2];
         DataSource dS = new DataSource();
         Connection con = dS.getConnection();
-        Integer[] tipiStelle = new Integer[8];
+        Double[] tipiStelle = new Double[8];
         vecPer = perD.getAllPerimetri(con);
 
-        int presIn = 0;
-        int prosIn = 0;
-        int unbIn = 0;
-        int formIn = 0;
+        double presIn = 0;
+        double prosIn = 0;
+        double unbIn = 0;
+        double formIn = 0;
 
-        int presEs = 0;
-        int prosEs = 0;
-        int unbEs = 0;
-        int formEs = 0;
+        double presEs = 0;
+        double prosEs = 0;
+        double unbEs = 0;
+        double formEs = 0;
 
         Double[] k = new Double[2];             //   pD ______________  pA
         Double[] pA = new Double[2];            //     |              |
@@ -156,6 +157,19 @@ public class SearchStars {
                 }
                 num ++;
             }
+
+            double totIn = presIn + prosIn + unbIn + formIn;
+            presIn = ((presIn) / totIn) * 100;
+            prosIn = ((prosIn) / totIn) * 100;
+            unbIn = ((unbIn) / totIn) * 100;
+            formIn = ((formIn) / totIn) * 100;
+
+            double totEs = presEs + prosEs + unbEs + formEs;
+            presEs = ((presEs) / totEs) * 100;
+            prosEs = ((prosEs) / totEs) * 100;
+            unbEs = ((unbEs) / totEs) * 100;
+            formEs = ((formEs) / totEs) * 100;
+
             tipiStelle[0] = presIn;
             tipiStelle[1] = prosIn;
             tipiStelle[2] = unbIn;
@@ -169,6 +183,12 @@ public class SearchStars {
 
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         System.out.println(num);
         return tipiStelle;
@@ -176,13 +196,13 @@ public class SearchStars {
 
     public static void main(String[] args) {
         SearchStars sS = new SearchStars();
-        Integer[] tipiStelle;
+        Double[] tipiStelle;
         Double[] c = new Double[2];
         c[0] = Double.valueOf(150);
         c[1] = Double.valueOf(2);
 
         tipiStelle = sS.searchStarsRect(200.0, 10.5, c);
-        Integer[] t = tipiStelle;
+        Double[] t = tipiStelle;
         System.out.println(t[0] + "\n" + t[1] + "\n" + t[2] + "\n" + t[3]
                 + "\n" + t[4] + "\n" + t[5] + "\n" + t[6] + "\n" + t[7]);
 
