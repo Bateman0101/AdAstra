@@ -87,7 +87,4 @@ public class PuntoSegmentoDao extends AbstractDao {
         return this.isPresent(sql, c);
     }
 
-
-
-
 }

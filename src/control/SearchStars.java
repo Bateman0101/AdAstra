@@ -15,6 +15,15 @@ import static java.lang.Math.pow;
 @SuppressWarnings("Duplicates")
 public class SearchStars {
 
+    /**
+     * Da qui parte il controllore del REQ-FN-10. Questo metodo trova la quantità in percentuale dei tipi di stelle
+     * all'interno di una regione
+     *
+     * @param b
+     * @param h
+     * @param c
+     * @return Double[]
+     */
     public Double[] searchStarsRect(Double b, Double h, Double[] c) {
 
         StellaDao sD = new StellaDao();

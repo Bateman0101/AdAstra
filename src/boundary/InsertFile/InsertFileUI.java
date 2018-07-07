@@ -4,6 +4,7 @@ import boundary.Main;
 import control.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -49,31 +50,42 @@ public class InsertFileUI {
 
     public void onImportFile() {
 
-        String type = listCorpi.getValue();
-        String filePath = path.getText();
-        String satellite = listSat.getValue();
+        try {
 
-        switch (type) {
-            case "Filamento":
-                CsvFilamenti csvFilamenti = new CsvFilamenti();
-                csvFilamenti.insert(filePath);
-                break;
-            case "Stella":
-                CsvStelle csvStelle = new CsvStelle();
-                csvStelle.insert(filePath);
-                break;
-            case "Perimetro":
-                CsvPerimetro csvPerimetro = new CsvPerimetro();
-                csvPerimetro.insert(filePath, satellite);
-                break;
-            case "Scheletro":
-                CsvScheletro csvScheletro = new CsvScheletro();
-                csvScheletro.insert(filePath, satellite);
-                break;
+            String type = listCorpi.getValue();
+            String filePath = path.getText();
+            String satellite = listSat.getValue();
+
+            switch (type) {
+                case "Filamento":
+                    CsvFilamenti csvFilamenti = new CsvFilamenti();
+                    csvFilamenti.insert(filePath);
+                    break;
+                case "Stella":
+                    CsvStelle csvStelle = new CsvStelle();
+                    csvStelle.insert(filePath);
+                    break;
+                case "Perimetro":
+                    CsvPerimetro csvPerimetro = new CsvPerimetro();
+                    csvPerimetro.insert(filePath, satellite);
+                    break;
+                case "Scheletro":
+                    CsvScheletro csvScheletro = new CsvScheletro();
+                    csvScheletro.insert(filePath, satellite);
+                    break;
+            }
+
+        } catch (NullPointerException n) {
+            n.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("Inserisci un path valido");
+            alert.showAndWait();
         }
-
-
     }
+
+
 
     public void setPath(String str) {
 

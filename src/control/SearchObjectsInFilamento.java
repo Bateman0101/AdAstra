@@ -8,12 +8,22 @@ import entity.Stella;
 import entity.StellaDistanza;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 
 @SuppressWarnings("ALL")
 public class SearchObjectsInFilamento {
 
+    /**
+     * Questo metodo controlla se una stella(passate le proprie coordinate) sia all'interno di un filamento
+     * controllando le coordinate di essa con quelle del contotrno del filamento
+     *
+     * @param longitudine
+     * @param latitudine
+     * @param con
+     * @return Boolean
+     */
     public Boolean isStellaInFil(double longitudine, double latitudine, Connection con) {
 
         PerimetroDao perD = new PerimetroDao();
@@ -81,6 +91,14 @@ public class SearchObjectsInFilamento {
     }
 
 
+    /**
+     * Questo metodo, passate le coordinate di un punto, controlla se in quel punto interno al filamento ci sia una
+     * stella oppure no, se si ritorna l'oggetto stella.
+     * @param longitudine
+     * @param latitudine
+     * @param con
+     * @return Stella
+     */
     public Stella stellaInFil(double longitudine, double latitudine, Connection con) {
         StellaDao sD = new StellaDao();
         Stella stella = null;
@@ -91,6 +109,17 @@ public class SearchObjectsInFilamento {
         return stella;
     }
 
+
+    /**
+     * Questo metodo controlla tramite coordinate che una stella sia interna a un filamento(contorno di esso)
+     * oppure no
+     *
+     * @param longitudine
+     * @param latitudine
+     * @param vec
+     * @param con
+     * @return Boolean
+     */
     public Boolean stellaInFilVecPer(double longitudine, double latitudine, Vector<PuntoPerimetro> vec, Connection con) {
 
         //PerimetroDao perD = new PerimetroDao();
@@ -156,6 +185,15 @@ public class SearchObjectsInFilamento {
         return bool;
     }
 
+
+    /**
+     * Da qui parte il controllore del REQ-FN-12, questo metodo trova le stelle all'interno di un filamento
+     * e la distanza minima dalla spina dorsale di esso
+     *
+     * @param idFil
+     * @param satellite
+     * @return Vector<StellaDistanza>
+     */
     public Vector<StellaDistanza> positionStella(int idFil, String satellite) {
 
         DataSource dS = new DataSource();
@@ -196,10 +234,27 @@ public class SearchObjectsInFilamento {
             }
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return steDist;
     }
 
+
+    /**
+     * Questo metodo date Latitudine e Longitudine trova la distanza minima rispetto la spina dorsale di un filamento
+     *
+     * @param latSt
+     * @param lonSt
+     * @param IdFil
+     * @param sat
+     * @param con
+     * @return double
+     */
     public double minDistance(double latSt, double lonSt, int IdFil, String sat, Connection con) {
 
         Double[] distPre = new Double[2];
@@ -236,6 +291,15 @@ public class SearchObjectsInFilamento {
     }
 
 
+    /**
+     * Questo metodo trova la distanza tra due coordinate formate entrambe da Latitudine e Longitudine
+     *
+     * @param lat1
+     * @param lat2
+     * @param lon1
+     * @param lon2
+     * @return Double[]
+     */
     public Double[] distance(double lat1, double lat2, double lon1, double lon2) {
 
         Double[] distance = new Double[2];
@@ -248,6 +312,19 @@ public class SearchObjectsInFilamento {
     }
 
 
+    /**
+     * Questa formula fa parte del REQ-FN-9 e serve a vedere se una stella(o più in generale punto dello spazio)
+     * sia interna ad un filamento oppure no. Il metodo riporta solamente il risultato della formula che poi
+     * dovrà essere confrontata dal chiamante con un >= 0.01
+     *
+     * @param lonS
+     * @param latS
+     * @param lonP
+     * @param latP
+     * @param lonPS
+     * @param latPS
+     * @return double
+     */
     public double formula(double lonS, double latS, double lonP, double latP,
                           double lonPS, double latPS) {
 

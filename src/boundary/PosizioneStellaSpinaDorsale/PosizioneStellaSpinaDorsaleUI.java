@@ -1,21 +1,14 @@
 package boundary.PosizioneStellaSpinaDorsale;
 
 import boundary.Main;
-import control.FilamentoHandler;
 import control.SearchObjectsInFilamento;
-import entity.Stella;
 import entity.StellaDistanza;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 import java.util.Vector;
 
 @SuppressWarnings("ALL")
@@ -64,22 +57,68 @@ public class PosizioneStellaSpinaDorsaleUI {
 
         listStella.removeAll(listStella);
 
-        int id = Integer.parseInt(idTf.getText());
-        String satellite = satTf.getText();
+        try{
+            int id = Integer.parseInt(idTf.getText());
+            String satellite = satTf.getText();
+            if(!satellite.equals("Herschel") && !satellite.equals("Spitzer")){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(null);
+                alert.setHeaderText(null);
+                alert.setContentText("Inserisci un satellite valido");
+                alert.showAndWait();
+            }else {
+                SearchObjectsInFilamento searchO = new SearchObjectsInFilamento();
+                Vector<StellaDistanza> vec = searchO.positionStella(id, satellite);
+                int len = vec.size();
+                int i = 0;
+                while (i < len) {
+                    listStella.add(vec.get(i));
+                    i++;
 
-        SearchObjectsInFilamento searchO = new SearchObjectsInFilamento();
+                }
 
-        Vector<StellaDistanza> vec = searchO.positionStella(id, satellite);
+                tableView.setItems(listStella);
+            }
 
-        int len = vec.size();
-        int i = 0;
-        while (i < len) {
-            listStella.add(vec.get(i));
-            i++;
 
+
+        }catch (NumberFormatException n){
+            n.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(null);
+            alert.setHeaderText(null);
+            alert.setContentText("Inserisci un formato ID valido");
+            alert.showAndWait();
         }
 
-        tableView.setItems(listStella);
+
+        /*
+        Vector<StellaDistanza> vec = new Vector<>();
+        StellaDistanza s1 = new StellaDistanza(1, "Stella1", "A",
+                25.2, "BB", "CC", 20.00, 20.00, 53);
+        StellaDistanza s2 = new StellaDistanza(1, "Stella2", "A",
+                25.2, "BB", "CC", 20.00, 20.00, 786);
+        StellaDistanza s3 = new StellaDistanza(1, "Stella3", "A",
+                25.2, "BB", "CC", 20.00, 20.00, 876);
+        StellaDistanza s4 = new StellaDistanza(1, "Stella4", "A",
+                25.2, "BB", "CC", 20.00, 20.00, 75);
+        StellaDistanza s5 = new StellaDistanza(1, "Stella5", "A",
+                25.2, "BB", "CC", 20.00, 20.00, 87);
+        vec.add(s1);
+        vec.add(s2);
+        vec.add(s3);
+        vec.add(s4);
+        vec.add(s1);
+        vec.add(s1);
+        vec.add(s2);
+        vec.add(s4);
+        vec.add(s2);
+        vec.add(s3);
+        vec.add(s5);
+        */
+
+
+
     }
 
 

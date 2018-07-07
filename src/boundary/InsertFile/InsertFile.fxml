@@ -12,7 +12,7 @@
       <ComboBox fx:id="listCorpi" layoutX="28.0" layoutY="138.0" prefHeight="26.0" prefWidth="149.0" promptText="Corpi Celesti">
       </ComboBox>
       <Button layoutX="383.0" layoutY="217.0" mnemonicParsing="false" onAction="#onImportFile" text="Importa" />
-      <TextField fx:id="path" layoutX="278.0" layoutY="138.0" promptText="Inserisci persorso file" />
+      <TextField fx:id="path" editable="false" layoutX="278.0" layoutY="138.0" promptText="Inserisci persorso file" />
       <Button fx:id="homeBtn" layoutX="482.0" layoutY="51.0" onAction="#getHomePage" mnemonicParsing="false" text="Home" />
       <Button layoutX="462.0" layoutY="138.0" mnemonicParsing="false" onAction="#onChooseFile" prefHeight="26.0" prefWidth="39.0" text="..." />
       <Label layoutX="66.0" layoutY="37.0" prefHeight="16.0" prefWidth="130.0" text="Inserisci file">
