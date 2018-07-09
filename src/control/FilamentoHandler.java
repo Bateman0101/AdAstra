@@ -6,6 +6,7 @@ import dao.StellaDao;
 import entity.Filamento;
 import entity.Punto;
 import entity.Stella;
+import exceptions.NoFilamentoException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -148,17 +149,17 @@ public class FilamentoHandler {
     }
 
 
-    public Punto computeCentroid(int id, String satellite) {
+    public Punto computeCentroid(int id, String satellite) throws NoFilamentoException{
 
         FilamentoDao dao = new FilamentoDao();
-        ArrayList<Punto> list = dao.findPerimeter(id, satellite);
+            ArrayList<Punto> list = dao.findPerimeter(id, satellite);
 
         Punto c = centroid(list);
 
         return c;
     }
 
-    public double computeExtension(int id, String satellite) {
+    public double computeExtension(int id, String satellite) throws NoFilamentoException{
 
         FilamentoDao dao = new FilamentoDao();
         ArrayList<Punto> list = dao.findPerimeter(id, satellite);
@@ -176,7 +177,7 @@ public class FilamentoHandler {
         return list;
     }
 
-    public ArrayList<Filamento> isInsideSquare(double centerLat, double centerLon, double lato) {
+    public ArrayList<Filamento> isInsideSquare(double centerLat, double centerLon, double lato) throws NoFilamentoException{
 
         FilamentoDao dao = new FilamentoDao();
 
@@ -196,7 +197,7 @@ public class FilamentoHandler {
     return result;
 }
 
-    public ArrayList<Filamento> isInsideCircle(double centerLat, double centerLon, double radius) {
+    public ArrayList<Filamento> isInsideCircle(double centerLat, double centerLon, double radius) throws NoFilamentoException{
 
         FilamentoDao dao = new FilamentoDao();
 
@@ -217,7 +218,7 @@ public class FilamentoHandler {
         return result;
     }
 
-    public ArrayList<Stella> stelleInFilamento(int id, String satellite) {
+    public ArrayList<Stella> stelleInFilamento(int id, String satellite) throws NoFilamentoException{
 
 
         FilamentoDao dao = new FilamentoDao();

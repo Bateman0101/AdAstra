@@ -3,8 +3,10 @@ package boundary.Login;
 import boundary.HomePageBoundary;
 import boundary.Main;
 import control.UtenteHandler;
+import exceptions.NoUserException;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -29,18 +31,42 @@ public class LoginBoundary {
             String id = idEntry.getText();
             String password = passwordEntry.getText();
 
-            UtenteHandler ctrl = new UtenteHandler();
+            if (password.length() < 6 || id.length() < 6) {
 
-            if (!ctrl.isUserPresent(id, password))
+                getAlert("Inserire ID/password di minimo 6 caratteri");
                 return;
 
-            String tipo = ctrl.getTipo(id, password);
+            }
 
-            HomePageBoundary.setTipo(tipo);
+            UtenteHandler ctrl = new UtenteHandler();
 
-            getHomePage();
+            try {
+
+                ctrl.isUserPresent(id, password);
+
+                String tipo = ctrl.getTipo(id, password);
+
+                HomePageBoundary.setTipo(tipo);
+
+                getHomePage();
+
+            }catch (NoUserException e){
+
+                getAlert("Utente non presente nel sistema!");
+            }
+
 
         }
+
+    public void getAlert(String message){
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(null);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+        return;
+    }
 
     public void getHomePage() {
 

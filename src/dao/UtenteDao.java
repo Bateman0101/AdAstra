@@ -1,6 +1,8 @@
 package dao;
 
 import entity.Utente;
+import exceptions.NoFilamentoException;
+import exceptions.NoUserException;
 
 import java.sql.*;
 
@@ -15,11 +17,12 @@ public class UtenteDao extends AbstractDao {
     private final String COLUMN_TIPO = "tipo";
 
 
-    public Boolean isUserPresent(String id, String password, Connection c) {
+    public Boolean isUserPresent(String id, String password, Connection c){
         String sql = "SELECT from " + TABLE_NAME + " WHERE " +
                 COLUMN_ID + " = '" + id + "'" + " AND " +
                 COLUMN_PASSWORD + " = '" + password + "'";
         return this.isPresent(sql, c);
+
     }
 
     public void insertNewUser(String id, String nome, String cognome,
@@ -50,7 +53,7 @@ public class UtenteDao extends AbstractDao {
         }
     }
 
-    public Utente getUser(String id, String password, Connection c) {
+    public Utente getUser(String id, String password, Connection c) throws NoUserException{
 
         String sql = "SELECT * from " + TABLE_NAME + " WHERE " +
                 COLUMN_ID + " = '" + id + "'" + " AND " +
@@ -60,10 +63,14 @@ public class UtenteDao extends AbstractDao {
         Statement s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
         ResultSet rs = s.executeQuery(sql);
+
         if (rs.next()) {
             u = new Utente(rs.getString(1), rs.getString(2),
                     rs.getString(3), rs.getString(4),
                     rs.getString(5), rs.getString(6));
+        }
+        else{
+            throw new NoUserException("user not present");
         }
     } catch (SQLException e) {
             e.printStackTrace();

@@ -3,6 +3,7 @@ package boundary.InsertStrumento;
 import boundary.Main;
 import control.SatelliteHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -32,19 +33,14 @@ public class InsertStrumentoBoundary {
 
         String nameS = name.getText();
         String bandeS = bande.getText();
-//        ArrayList<Double> list = new ArrayList<>();
-//
-//        String[] bandeD = bandeS.split("/");
-//
-//        for (int i = 0; i<bandeD.length; i++) {
-//
-//            list.add(Double.parseDouble(bandeD[i]));
-//
-//        }
-
-//        Double [] listB = list.toArray(new Double[list.size()]);
 
         String satelliteS = satelliteEntry.getText();
+
+        if (nameS == null || bandeS == null || satelliteS == null){
+
+            getAlert("Inserire tutti i dati.");
+            return;
+        }
 
         SatelliteHandler ctrl = new SatelliteHandler();
 
@@ -61,6 +57,16 @@ public class InsertStrumentoBoundary {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void getAlert(String message){
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(null);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+        return;
     }
 
 }

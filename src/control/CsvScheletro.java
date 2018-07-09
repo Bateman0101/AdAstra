@@ -19,19 +19,6 @@ public class CsvScheletro {
         SegmentoDao sD = new SegmentoDao();
         DataSource dS = new DataSource();
         Connection con = dS.getConnection();
-        //String csvFileSpitzer = "C:\\Projects\\AdAstra\\CSV Files\\scheletro_filamenti_Spitzer(CORRETTO).csv";
-        //String csvFileHerschel = "C:\\Projects\\AdAstra\\CSV Files\\scheletro_filamenti_Herschel.csv";
-        //String filepath = null;
-
-        /*switch (satellite) {
-            case "Spitzer":
-                filepath = csvFileSpitzer;
-                break;
-
-            case "Herschel":
-                filepath = csvFileHerschel;
-                break;
-        }*/
 
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
 

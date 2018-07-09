@@ -4,13 +4,11 @@ import boundary.Main;
 import control.FilamentoHandler;
 import entity.Filamento;
 import entity.Stella;
+import exceptions.NoFilamentoException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -60,16 +58,22 @@ public class FindStelleInFilamentoBoundary {
 
         FilamentoHandler ctrl = new FilamentoHandler();
 
-        ArrayList<Stella> listS = ctrl.stelleInFilamento(id, satellite);
+        try {
 
-        int len = listS.size();
-        int i = 0;
-        while (i < len) {
-            listStella.add(listS.get(i));
-            i++;
+            ArrayList<Stella> listS = ctrl.stelleInFilamento(id, satellite);
+
+            int len = listS.size();
+            int i = 0;
+            while (i < len) {
+                listStella.add(listS.get(i));
+                i++;
+            }
+
+            table.setItems(listStella);
+        } catch (NoFilamentoException e){
+
+            getAlert("Filamento non presente nel sistema!");
         }
-
-        table.setItems(listStella);
 
 
 
@@ -84,6 +88,15 @@ public class FindStelleInFilamentoBoundary {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void getAlert(String message){
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(null);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+        return;
     }
 
 

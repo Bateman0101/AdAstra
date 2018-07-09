@@ -2,6 +2,7 @@ package dao;
 
 import entity.Filamento;
 import entity.Punto;
+import exceptions.NoFilamentoException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -107,7 +108,7 @@ public class FilamentoDao extends AbstractDao {
         return this.isPresent(sql, c);
     }
 
-    public ArrayList<Punto> findPerimeter(int id, String satellite) {
+    public ArrayList<Punto> findPerimeter(int id, String satellite) throws NoFilamentoException{
 
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
@@ -144,6 +145,12 @@ public class FilamentoDao extends AbstractDao {
                 e.printStackTrace();
             }
 
+
+
+        }
+
+        else {
+            throw new NoFilamentoException("The occurrence is not present in the database");
         }
 
         return p;

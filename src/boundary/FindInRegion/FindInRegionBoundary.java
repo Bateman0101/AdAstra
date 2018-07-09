@@ -3,13 +3,11 @@ package boundary.FindInRegion;
 import boundary.Main;
 import control.FilamentoHandler;
 import entity.Filamento;
+import exceptions.NoFilamentoException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -86,27 +84,41 @@ public class FindInRegionBoundary {
 
             case "Cerchio":
 
-                ArrayList<Filamento> listFil = ctrl.isInsideCircle(lat, lon, radius);
-                int len = listFil.size();
-                int i = 0;
-                while (i < len) {
-                    listFilamento.add(listFil.get(i));
-                    i++;
-                }
+                try {
 
-                tableEntry.setItems(listFilamento);
+                    ArrayList<Filamento> listFil = ctrl.isInsideCircle(lat, lon, radius);
+                    int len = listFil.size();
+                    int i = 0;
+                    while (i < len) {
+                        listFilamento.add(listFil.get(i));
+                        i++;
+                    }
+
+                    tableEntry.setItems(listFilamento);
+                }catch (NoFilamentoException e){
+
+                    getAlert("Filamento non presente nel sistema!");
+
+
+                }
 
             case "Quadrato":
 
-                ArrayList<Filamento> listFil2 = ctrl.isInsideSquare(lat, lon, radius);
-                int len2 = listFil2.size();
-                int j = 0;
-                while (j < len2) {
-                    listFilamento.add(listFil2.get(j));
-                    j++;
-                }
+                try {
 
-                tableEntry.setItems(listFilamento);
+                    ArrayList<Filamento> listFil2 = ctrl.isInsideSquare(lat, lon, radius);
+                    int len2 = listFil2.size();
+                    int j = 0;
+                    while (j < len2) {
+                        listFilamento.add(listFil2.get(j));
+                        j++;
+                    }
+
+                    tableEntry.setItems(listFilamento);
+                }catch(NoFilamentoException e){
+
+                    getAlert("Filamento non presente nel sistema!");
+                }
             default:
                 break;
 
@@ -122,5 +134,15 @@ public class FindInRegionBoundary {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void getAlert(String message){
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(null);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+        return;
     }
 }

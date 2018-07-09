@@ -4,6 +4,7 @@ import boundary.Main;
 import control.UtenteHandler;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -48,6 +49,14 @@ public class InsertUtenteBoundary {
         String password = passwordEntry.getText();
         String tipo = listTipo.getValue();
 
+        if (id == null || nome == null || cognome == null
+                || email == null || password == null || tipo == null ||
+                id.length() < 6 || password.length() < 6){
+
+            getAlert("Inserire dati corretti.");
+            return;
+        }
+
         UtenteHandler ctrl = new UtenteHandler();
 
         ctrl.insertNewUser(id, nome, cognome, email, password, tipo);
@@ -65,6 +74,16 @@ public class InsertUtenteBoundary {
             e.printStackTrace();
         }
 
+    }
+
+    public void getAlert(String message){
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(null);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+        return;
     }
 
 }
