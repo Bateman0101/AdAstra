@@ -13,7 +13,9 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
 
-        primaryStage.setScene(new Scene(root, 800, 500));
+        Scene s = new Scene(root, 800, 500);
+        s.getStylesheets().add(Main.class.getResource("bootstrap3.css").toExternalForm());
+        primaryStage.setScene(s);
         primaryStage.show();
 
     }
