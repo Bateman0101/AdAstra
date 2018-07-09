@@ -39,34 +39,44 @@ public class FindFilamentoBoundary {
 
         list.getItems().clear();
 
-        int id = Integer.parseInt(idEntry.getText());
-        String satellite = satelliteEntry.getText();
-
-        FilamentoHandler ctrl = new FilamentoHandler();
-
         try {
+            int id = Integer.parseInt(idEntry.getText());
+            String satellite = satelliteEntry.getText();
 
-            Punto p = ctrl.computeCentroid(id, satellite);
+            if (Integer.toString(id).length() == 0 || satellite.length() == 0) {
 
-            double extension = ctrl.computeExtension(id, satellite);
-
-            ArrayList<Integer> listSeg = ctrl.findSegments(id, satellite);
-
-            latEntry.setText(Double.toString(p.getLatitudine()));
-            lonEntry.setText(Double.toString(p.getLongitudine()));
-
-            extensionEntry.setText(Double.toString(extension));
-
-            for (int i = 0; i<listSeg.size(); i++)
-            {
-                list.getItems().add(listSeg.get(i));
+                getAlert("inserire dati corretti");
+                return;
             }
 
-        }catch (NoFilamentoException e) {
 
-            getAlert("Filamento non presente nel sistema.");
+            FilamentoHandler ctrl = new FilamentoHandler();
+
+            try {
+
+                Punto p = ctrl.computeCentroid(id, satellite);
+
+                double extension = ctrl.computeExtension(id, satellite);
+
+                ArrayList<Integer> listSeg = ctrl.findSegments(id, satellite);
+
+                latEntry.setText(Double.toString(p.getLatitudine()));
+                lonEntry.setText(Double.toString(p.getLongitudine()));
+
+                extensionEntry.setText(Double.toString(extension));
+
+                for (int i = 0; i < listSeg.size(); i++) {
+                    list.getItems().add(listSeg.get(i));
+                }
+
+            } catch (NoFilamentoException e) {
+
+                getAlert("Filamento non presente nel sistema.");
 
             }
+        } catch (NumberFormatException e){
+            getAlert("Inserire dati corretti");
+        }
 
     }
 

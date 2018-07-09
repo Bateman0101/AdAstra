@@ -53,26 +53,39 @@ public class FindStelleInFilamentoBoundary {
 
         listStella.removeAll(listStella);
 
-        int id = Integer.parseInt(idEntry.getText());
-        String satellite = satelliteEntry.getText();
-
-        FilamentoHandler ctrl = new FilamentoHandler();
-
         try {
 
-            ArrayList<Stella> listS = ctrl.stelleInFilamento(id, satellite);
 
-            int len = listS.size();
-            int i = 0;
-            while (i < len) {
-                listStella.add(listS.get(i));
-                i++;
+            int id = Integer.parseInt(idEntry.getText());
+            String satellite = satelliteEntry.getText();
+
+            if (satellite.length() == 0 || Integer.toString(id).equals(null)){
+
+                getAlert("inserire dati corretti.");
+                return;
             }
 
-            table.setItems(listStella);
-        } catch (NoFilamentoException e){
+            FilamentoHandler ctrl = new FilamentoHandler();
 
-            getAlert("Filamento non presente nel sistema!");
+            try {
+
+                ArrayList<Stella> listS = ctrl.stelleInFilamento(id, satellite);
+
+                int len = listS.size();
+                int i = 0;
+                while (i < len) {
+                    listStella.add(listS.get(i));
+                    i++;
+                }
+
+                table.setItems(listStella);
+            } catch (NoFilamentoException e) {
+
+                getAlert("Filamento non presente nel sistema!");
+            }
+        }catch (NumberFormatException e) {
+
+            getAlert("inserire dati corretti");
         }
 
 

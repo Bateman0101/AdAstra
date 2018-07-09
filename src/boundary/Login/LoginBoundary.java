@@ -6,10 +6,7 @@ import control.UtenteHandler;
 import exceptions.NoUserException;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class LoginBoundary {
@@ -34,6 +31,7 @@ public class LoginBoundary {
             if (password.length() < 6 || id.length() < 6) {
 
                 getAlert("Inserire ID/password di minimo 6 caratteri");
+
                 return;
 
             }
@@ -60,12 +58,11 @@ public class LoginBoundary {
 
     public void getAlert(String message){
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(null);
         alert.setHeaderText(null);
         alert.setContentText(message);
-        alert.show();
-        return;
+        alert.showAndWait();
     }
 
     public void getHomePage() {

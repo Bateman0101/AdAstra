@@ -74,54 +74,66 @@ public class FindInRegionBoundary {
 
         FilamentoHandler ctrl = new FilamentoHandler();
 
-        String region = listRegion.getValue();
-        double radius = Double.parseDouble(radiusEntry.getText());
-        double lat = Double.parseDouble(latEntry.getText());
-        double lon = Double.parseDouble(lonEntry.getText());
+        try {
+
+            String region = listRegion.getValue();
+            double radius = Double.parseDouble(radiusEntry.getText());
+            double lat = Double.parseDouble(latEntry.getText());
+            double lon = Double.parseDouble(lonEntry.getText());
+
+            if (Double.toString(radius).length() == 0 || Double.toString(radius).length() == 0
+                    || Double.toString(lon).length() == 0){
+
+                getAlert("inserire dati corretti");
+                return;
+            }
+
+            switch (region) {
+
+                case "Cerchio":
+
+                    try {
+
+                        ArrayList<Filamento> listFil = ctrl.isInsideCircle(lat, lon, radius);
+                        int len = listFil.size();
+                        int i = 0;
+                        while (i < len) {
+                            listFilamento.add(listFil.get(i));
+                            i++;
+                        }
+
+                        tableEntry.setItems(listFilamento);
+                    } catch (NoFilamentoException e) {
+
+                        getAlert("Filamento non presente nel sistema!");
 
 
-        switch(region) {
-
-            case "Cerchio":
-
-                try {
-
-                    ArrayList<Filamento> listFil = ctrl.isInsideCircle(lat, lon, radius);
-                    int len = listFil.size();
-                    int i = 0;
-                    while (i < len) {
-                        listFilamento.add(listFil.get(i));
-                        i++;
                     }
 
-                    tableEntry.setItems(listFilamento);
-                }catch (NoFilamentoException e){
+                case "Quadrato":
 
-                    getAlert("Filamento non presente nel sistema!");
+                    try {
 
+                        ArrayList<Filamento> listFil2 = ctrl.isInsideSquare(lat, lon, radius);
+                        int len2 = listFil2.size();
+                        int j = 0;
+                        while (j < len2) {
+                            listFilamento.add(listFil2.get(j));
+                            j++;
+                        }
 
-                }
+                        tableEntry.setItems(listFilamento);
+                    } catch (NoFilamentoException e) {
 
-            case "Quadrato":
-
-                try {
-
-                    ArrayList<Filamento> listFil2 = ctrl.isInsideSquare(lat, lon, radius);
-                    int len2 = listFil2.size();
-                    int j = 0;
-                    while (j < len2) {
-                        listFilamento.add(listFil2.get(j));
-                        j++;
+                        getAlert("Filamento non presente nel sistema!");
                     }
+                default:
+                    break;
 
-                    tableEntry.setItems(listFilamento);
-                }catch(NoFilamentoException e){
+            }
+        } catch (NumberFormatException e) {
 
-                    getAlert("Filamento non presente nel sistema!");
-                }
-            default:
-                break;
-
+            getAlert("Inserire dati corretti");
         }
     }
 
