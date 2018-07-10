@@ -1,5 +1,6 @@
 package boundary.FindStelleRegioneFilamento;
 
+import boundary.Main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +14,9 @@ public class MainFindStelleRegioneFilamento extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("FindStelleRegioneFilamento.fxml"));
 
-        primaryStage.setScene(new Scene(root, 760, 440));
+        Scene s = new Scene(root, 800, 500);
+        s.getStylesheets().add(Main.class.getResource("bootstrap3.css").toExternalForm());
+        primaryStage.setScene(s);
         primaryStage.show();
 
     }

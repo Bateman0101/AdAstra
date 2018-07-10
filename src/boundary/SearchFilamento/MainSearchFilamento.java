@@ -1,5 +1,6 @@
 package boundary.SearchFilamento;
 
+import boundary.Main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,9 +14,10 @@ public class MainSearchFilamento extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("ricerca.fxml"));
 
-        primaryStage.setScene(new Scene(root, 985, 600));
+        Scene s = new Scene(root, 985, 600);
+        s.getStylesheets().add(Main.class.getResource("bootstrap3.css").toExternalForm());
+        primaryStage.setScene(s);
         primaryStage.show();
-
     }
 
 
