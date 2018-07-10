@@ -54,6 +54,8 @@ public class CsvScheletro {
 
                         }
                     }
+                    System.out.println("filamento non presente");
+
 
 
                     /*
