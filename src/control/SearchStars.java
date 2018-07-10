@@ -168,16 +168,20 @@ public class SearchStars {
             }
 
             double totIn = presIn + prosIn + unbIn + formIn;
-            presIn = ((presIn) / totIn) * 100;
-            prosIn = ((prosIn) / totIn) * 100;
-            unbIn = ((unbIn) / totIn) * 100;
-            formIn = ((formIn) / totIn) * 100;
+            if(totIn != 0) {
+                presIn = ((presIn) / totIn) * 100;
+                prosIn = ((prosIn) / totIn) * 100;
+                unbIn = ((unbIn) / totIn) * 100;
+                formIn = ((formIn) / totIn) * 100;
+            }
 
             double totEs = presEs + prosEs + unbEs + formEs;
-            presEs = ((presEs) / totEs) * 100;
-            prosEs = ((prosEs) / totEs) * 100;
-            unbEs = ((unbEs) / totEs) * 100;
-            formEs = ((formEs) / totEs) * 100;
+            if (totEs != 0){
+                presEs = ((presEs) / totEs) * 100;
+                prosEs = ((prosEs) / totEs) * 100;
+                unbEs = ((unbEs) / totEs) * 100;
+                formEs = ((formEs) / totEs) * 100;
+            }
 
             tipiStelle[0] = presIn;
             tipiStelle[1] = prosIn;
