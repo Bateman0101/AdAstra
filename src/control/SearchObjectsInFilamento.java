@@ -23,35 +23,10 @@ public class SearchObjectsInFilamento {
      * @param con
      * @return Boolean
      */
-    public Boolean isStellaInFil(int idFil, double longitudine, double latitudine, Connection con) {
+    public Boolean isStellaInFil(int idFil, double longitudine,  double latitudine, Vector<PuntoPerimetro> vec, Connection con) {
 
-        PerimetroDao perD = new PerimetroDao();
         Boolean bool = false;
-        Vector<PuntoPerimetro> vec = new Vector<PuntoPerimetro>();
 
-        /*
-        Per fare un test del metodo commentare la parte DAO ed utilizzare i dati forniti a seguire;
-         */
-
-        /*
-        PuntoPerimetro pTest1 = new PuntoPerimetro(1.00,1.00,"Spitzer",380);
-        PuntoPerimetro pTest2 = new PuntoPerimetro(4.00,1.00,"Spitzer",380);
-        PuntoPerimetro pTest3 = new PuntoPerimetro(4.00,4.00,"Spitzer",380);
-        PuntoPerimetro pTest4 = new PuntoPerimetro(1.00,4.00,"Spitzer",380);
-        PuntoPerimetro pTest5 = new PuntoPerimetro(2.50,3.50,"Spitzer",380);
-        Vector<PuntoPerimetro> vecTest = new Vector<PuntoPerimetro>();
-        vecTest.add(pTest1);
-        System.out.println("pTest1 aggiunto ");
-        vecTest.add(pTest2);
-        System.out.println("pTest2 aggiunto ");
-        vecTest.add(pTest3);
-        System.out.println("pTest3 aggiunto ");
-        vecTest.add(pTest4);
-        System.out.println("pTest4 aggiunto ");
-        vecTest.add(pTest5);
-        System.out.println("pTest5 aggiunto ");
-        */
-        vec = perD.getAllPerimetriFil(idFil, con);
         double longSte = longitudine;
         double latSte = latitudine;
         int l = vec.size();
@@ -113,25 +88,6 @@ public class SearchObjectsInFilamento {
         }
 
         return bool;
-    }
-
-
-    /**
-     * Questo metodo, passate le coordinate di un punto, controlla se in quel punto interno al filamento ci sia una
-     * stella oppure no, se si ritorna l'oggetto stella.
-     * @param longitudine
-     * @param latitudine
-     * @param con
-     * @return Stella
-     */
-    public Stella stellaInFil(int idFil, double longitudine, double latitudine, Connection con) {
-        StellaDao sD = new StellaDao();
-        Stella stella = null;
-
-        if (this.isStellaInFil(idFil, longitudine, latitudine, con)) {
-            stella = sD.getStella(latitudine, longitudine, con);
-        }
-        return stella;
     }
 
 
@@ -225,6 +181,9 @@ public class SearchObjectsInFilamento {
         Connection con = dS.getConnection();
         //Vector<Object> stelle;
         Vector<StellaDistanza> steDist = new Vector<>();
+        Vector<PuntoPerimetro> vector = new Vector<PuntoPerimetro>();
+        PerimetroDao perD = new PerimetroDao();
+        vector = perD.getAllPerimetriFil(idFil, con);
         StellaDao sD = new StellaDao();
         double dist;
         Stella stella;
@@ -233,6 +192,8 @@ public class SearchObjectsInFilamento {
         /*
         Commentare il DAO ed utilizzare i dati seguenti per fare i test
          */
+
+        PuntoPerimetro pTest1 = new PuntoPerimetro(1.00, 1.00, "Spitzer", 380);
 
         Stella stTest1 = new Stella(1, "Test1", "PRESTELLAR", 20.00, "MIPS", "Spitzer",
                 -20.37483, 272.0743);
@@ -261,7 +222,7 @@ public class SearchObjectsInFilamento {
                 stella = vec.get(i);
                 double lat = stella.getLatitudine();
                 double lon = stella.getLongitudine();
-                if (this.isStellaInFil(idFil, lon, lat, con)) {
+                if (this.isStellaInFil(idFil, lon, lat, vector, con)) {
                     dist = this.minDistance(lat, lon, idFil, satellite, con);
                     System.out.println(stella);
                     StellaDistanza stellaDistanza = new StellaDistanza(
@@ -408,7 +369,7 @@ public class SearchObjectsInFilamento {
         //StellaDao sD = new StellaDao();
         //Vector<Stella> vec = new Vector<>();
         //vec = sD.getAllStars(con);
-        //vector = s.positionStella(380, "Spitzer");
+        vector = s.positionStella(380, "Spitzer");
         //Stella stella = new Stella(1,"ciao","luce", 20.20, "A", "ab",20.02,20.2);
         //vector.add(stella);
         //vector.add(20.2);
@@ -417,13 +378,6 @@ public class SearchObjectsInFilamento {
         int size = vector.size();
         //int lung = vec.size();
         int i = 0;
-        try {
-            double res = s.formula(1.00,1.00,1.00,1.00,1.00,1.00);
-            System.out.println(res);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
         if(size == 0){
             System.out.println("EMPTY");

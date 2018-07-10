@@ -52,7 +52,7 @@ public class   CsvFilamenti {
                 // use comma as separator
 
                 String[] row = line.split(cvsSplitBy);
-                if (!row[0].equals("IDFIL")) {
+                if (!row[0].equals("IDFIL") | !row[0].equals("'IDFIL")) {
                     if(!fD.isPresentFilamento(Integer.parseInt(row[0]), row[7], c)) {
                         fD.insertFil(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
                                 Double.parseDouble(row[5]), Double.parseDouble(row[6]),  row[7], row[8], c);

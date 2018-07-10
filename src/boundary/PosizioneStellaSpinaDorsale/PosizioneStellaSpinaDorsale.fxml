@@ -11,7 +11,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boundary.PosizioneStellaSpinaDorsale.PosizioneStellaSpinaDorsaleUI">
    <children>
        
-      <Button fx:id="homeBtn" layoutX="471.0" layoutY="43.0" mnemonicParsing="false" text="Home" />
+      <Button fx:id="homeBtn" onAction="#getHomePage" layoutX="471.0" layoutY="43.0" mnemonicParsing="false" text="Home" />
       <TableView fx:id="tableView" layoutY="186.0" prefHeight="231.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <columns>
             <TableColumn fx:id="idTc" prefWidth="104.0" text="ID" />
