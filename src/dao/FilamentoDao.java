@@ -3,6 +3,8 @@ package dao;
 import entity.Filamento;
 import entity.Punto;
 import exceptions.NoFilamentoException;
+import jUnitTestCases.Tests;
+import org.postgresql.util.PSQLException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -45,8 +47,8 @@ public class FilamentoDao extends AbstractDao {
                     "'" + ellitticita + "', " +
                     "'" + contrasto + "', " +
                     "'" + temperatura + "', " +
-                    "'" + satellite + "', " +
-                    "'" + strumento + "')";
+                    "'" + strumento + "', " +
+                    "'" + satellite + "')";
 
             //stmt.executeUpdate(sql);
             //stmt.close();
@@ -55,7 +57,9 @@ public class FilamentoDao extends AbstractDao {
 
 
 
-        }catch (Exception e){
+        }catch (PSQLException e){
+            e.printStackTrace();
+        }catch (SQLException e){
             e.printStackTrace();
         }
 
@@ -122,7 +126,7 @@ public class FilamentoDao extends AbstractDao {
                 ResultSet rs;
                 String sql = "SELECT *" +
                         "FROM PERIMETRO " +
-                        "WHERE FILAMENTO = ? AND SATELLITE = ? ";
+                        "WHERE filamento_id = ? AND filamento_satellite = ? ";
                 stmt = c.prepareStatement(sql);
                 stmt.setInt(1, id);
                 stmt.setString(2, satellite);
@@ -234,14 +238,9 @@ public class FilamentoDao extends AbstractDao {
 
 
     public static void main(String[] args) {
-        FilamentoDao fD = new FilamentoDao();
-        DataSource dS = new DataSource();
-        Connection c = dS.getConnection();
-        boolean b;
-        b = fD.isPresentFilamento(8393, "Spitzer" , c);
-        System.out.println(b);
-        //fD.insertFil(1,"Test","00", "5.256", 123.58, 126.23,
-         //       15555500, "Laser", "Spitzer");
+
+        Tests t = new Tests();
+        t.findInRegion();
     }
 }
 

@@ -53,7 +53,7 @@ public class DistanzaDaContornoDao {
         Connection c = ds.getConnection();
         String sql = "SELECT LONGITUDINE, LATITUDINE " +
                      "FROM PERIMETRO " +
-                     "WHERE FILAMENTO = ? AND SATELLITE = ? ";
+                     "WHERE filamento_id = ? AND filamento_satellite = ? ";
         stmt = c.prepareStatement(sql);
         stmt.setInt(1, idF);
         stmt.setString(2, sat);
