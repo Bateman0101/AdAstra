@@ -29,8 +29,6 @@ public class HomePageBoundary {
     private Button inFileBtn;
     @FXML
     private Button searchFil;
-    @FXML
-    private Button searchSeg;
 
     public static String tipo;
 
@@ -174,18 +172,6 @@ public class HomePageBoundary {
 
     @FXML
     void searchFil() {
-        MainSearchFilamento c = new MainSearchFilamento();
-        try {
-            c.start(new Stage());
-            Stage stage = (Stage) button.getScene().getWindow();
-            stage.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void searchSeg() {
         MainSearchFilamento c = new MainSearchFilamento();
         try {
             c.start(new Stage());

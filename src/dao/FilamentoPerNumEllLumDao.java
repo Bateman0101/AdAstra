@@ -19,20 +19,13 @@ public class FilamentoPerNumEllLumDao {
         PreparedStatement stmt;
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
-       /* String sql = "SELECT * " +
-                       "FROM FILAMENTO " +
-                       "WHERE NOME IN ( " +
+        String sql = "SELECT * " +
+                     "FROM FILAMENTO " +
+                     "WHERE NOME IN ( " +
                                      "SELECT F.NOME " +
                                      "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
                                      "GROUP BY F.NOME, F.ID " +
-                                     "HAVING COUNT(*)<=? AND COUNT(*)>=? )";*/
-       String sql = "SELECT * " +
-               "FROM FILAMENTO " +
-               "WHERE (ID,SATELLITE) IN ( " +
-               "SELECT F.ID, F.SATELLITE " +
-               "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
-               "GROUP BY F.ID, F.SATELLITE " +
-               "HAVING COUNT(*)<=? AND COUNT(*)>=? )";
+                                     "HAVING COUNT(*)<=? AND COUNT(*)>=? )";
         stmt = c.prepareStatement(sql);
         stmt.setInt(1, sup);
         stmt.setInt(2, inf);
@@ -56,20 +49,13 @@ public class FilamentoPerNumEllLumDao {
         PreparedStatement stmt;
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
-       /* String sql = "SELECT * " +
-                       "FROM FILAMENTO " +
-                       "WHERE NOME NOT IN ( " +
+        String sql = "SELECT * " +
+                     "FROM FILAMENTO " +
+                     "WHERE NOME NOT IN ( " +
                                      "SELECT F.NOME " +
                                      "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
                                      "GROUP BY F.NOME, F.ID " +
-                                     "HAVING COUNT(*) > ?";*/
-        String sql = "SELECT * " +
-                     "FROM FILAMENTO " +
-                     "WHERE (ID,SATELLITE) NOT IN ( " +
-                                                  "SELECT F.ID, F.SATELLITE " +
-                                                  "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
-                                                  "GROUP BY F.ID, F.SATELLITE " +
-                                                  "HAVING COUNT(*) > ? )";
+                                     "HAVING COUNT(*) > ?";
         stmt = c.prepareStatement(sql);
         stmt.setInt(1, sup);
         rs = stmt.executeQuery();
