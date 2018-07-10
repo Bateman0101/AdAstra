@@ -36,14 +36,14 @@ public class ControllerFil {
     }
 
     /**
-     * Wrapper per il metodo {@link dao.FilamentoPerNumEllLumDao#searchLum(float)}
+     * Wrapper per il metodo {@link dao.FilamentoPerNumEllLumDao#searchLum(double)}
      * @param lum valore percentuale di luminosità(lum deve essere maggiore di 0)
      * @return lista di Filamenti
      * @throws SQLException se si verifica qualcosa di inaspettato nel database
      */
-    public List<Filamento> ricercaLum(float lum) throws SQLException{
+    public List<Filamento> ricercaLum(double lum) throws SQLException{
         if (lum > 0) {
-            float contrasto = 1 + (lum / 100);
+            double contrasto = 1 + (lum / 100);
             List<Filamento> l;
             FilamentoPerNumEllLumDao dao = new FilamentoPerNumEllLumDao();
             l = dao.searchLum(contrasto);

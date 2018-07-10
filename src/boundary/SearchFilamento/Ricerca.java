@@ -300,7 +300,7 @@ public class Ricerca {
             i=0;
             num=0;
             ControllerFil source = new ControllerFil();
-            float l = Float.parseFloat(lum.getText());
+            double l = Double.parseDouble(lum.getText());
             if (l < 0) {
                 messenger msg = new messenger();
                 msg.messageOne("Errore - ricerca per luminosità","Inserire valore numerico maggiore di 0 nel campo percentuale luminosità.");

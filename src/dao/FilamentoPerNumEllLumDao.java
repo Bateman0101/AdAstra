@@ -84,8 +84,8 @@ public class FilamentoPerNumEllLumDao {
             strumento = rs.getString("strumento");
             satellite = rs.getString("satellite");
             flusso = rs.getString("flusso");
-            densita = rs.getString("densità");
-            ellitticita = rs.getDouble("ellitticità");
+            densita = rs.getString("densita");
+            ellitticita = rs.getDouble("ellitticita");
             contrasto = rs.getDouble("contrasto");
             temperatura = rs.getDouble("temperatura");
             fil = new Filamento(id, nome, strumento, satellite, flusso, densita, ellitticita, contrasto, temperatura);
@@ -100,7 +100,7 @@ public class FilamentoPerNumEllLumDao {
      * @throws SQLException se si verifica qualcosa di inaspettato nel database
      * @see #buildList(ResultSet)
      */
-    public List<Filamento> searchLum(float con) throws SQLException{
+    public List<Filamento> searchLum(double con) throws SQLException{
         ResultSet rs;
         List<Filamento> list;
         PreparedStatement stmt;
@@ -110,7 +110,7 @@ public class FilamentoPerNumEllLumDao {
                      "FROM FILAMENTO " +
                      "WHERE CONTRASTO > ? ";
         stmt = c.prepareStatement(sql);
-        stmt.setFloat(1, con);
+        stmt.setDouble(1, con);
         rs = stmt.executeQuery();
         list = buildList(rs);
         stmt.close();
