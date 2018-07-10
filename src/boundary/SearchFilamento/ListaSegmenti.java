@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -35,9 +34,6 @@ public class ListaSegmenti {
 
     @FXML // fx:id="distanceBtn"
     private Button distanceBtn; // Value injected by FXMLLoader
-
-    @FXML // fx:id="nomeFil"
-    private TextField nomeFil; // Value injected by FXMLLoader
 
     @FXML // fx:id="idFil"
     private TextField idFil; // Value injected by FXMLLoader
@@ -87,7 +83,6 @@ public class ListaSegmenti {
         assert idColumn != null : "fx:id=\"idColumn\" was not injected: check your FXML file 'lista_segmenti.fxml'.";
         assert typeColumn != null : "fx:id=\"typeColumn\" was not injected: check your FXML file 'lista_segmenti.fxml'.";
         assert distanceBtn != null : "fx:id=\"distanceBtn\" was not injected: check your FXML file 'lista_segmenti.fxml'.";
-        assert nomeFil != null : "fx:id=\"nomeFil\" was not injected: check your FXML file 'lista_segmenti.fxml'.";
         assert idFil != null : "fx:id=\"idFil\" was not injected: check your FXML file 'lista_segmenti.fxml'.";
         assert satellite != null : "fx:id=\"satellite\" was not injected: check your FXML file 'lista_segmenti.fxml'.";
         assert idSegmento != null : "fx:id=\"idSegmento\" was not injected: check your FXML file 'lista_segmenti.fxml'.";

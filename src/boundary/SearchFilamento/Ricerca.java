@@ -12,7 +12,6 @@ import entity.Segmento;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import entity.Filamento;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -40,20 +39,8 @@ public class Ricerca {
     @FXML // fx:id="Sup"
     private TextField Sup; // Value injected by FXMLLoader
 
-    @FXML // fx:id="plusInf"
-    private Button plusInf; // Value injected by FXMLLoader
-
-    @FXML // fx:id="plusSup"
-    private Button plusSup; // Value injected by FXMLLoader
-
     @FXML // fx:id="search"
     private Button search; // Value injected by FXMLLoader
-
-    @FXML // fx:id="minusInf"
-    private Button minusInf; // Value injected by FXMLLoader
-
-    @FXML // fx:id="minusSup"
-    private Button minusSup; // Value injected by FXMLLoader
 
     @FXML // fx:id="data"
     private TableView<Filamento> data; // Value injected by FXMLLoader
@@ -127,6 +114,7 @@ public class Ricerca {
     @FXML
     void back() {
         if(i>1){
+            num--;
             while((num%20) != 0) num--;
             int limit = num;
             num = num - 20;
@@ -146,14 +134,13 @@ public class Ricerca {
 
     @FXML
     void next() {
-        if(num < (list.size() - 1)){
-            int limit = num + 21;
+        if(num < list.size()){
+            int limit = num + 20;
             int p = list.size()/20;
             i++;
             if(list.size()%20 != 0) p++;
             data.getItems().clear();
             Filamento fil;
-            num++;
             while(num < list.size() && num < limit) {
                 fil = list.get(num);
                 data.getItems().add(fil);
@@ -161,26 +148,6 @@ public class Ricerca {
             }
             page.setText("pagina " + i + " di " + p);
         }
-    }
-
-    @FXML
-    void minusInf(ActionEvent event) {
-
-    }
-
-    @FXML
-    void minusSup(ActionEvent event) {
-
-    }
-
-    @FXML
-    void plusInf(ActionEvent event) {
-
-    }
-
-    @FXML
-    void plusSup(ActionEvent event) {
-
     }
 
     @FXML
@@ -232,6 +199,7 @@ public class Ricerca {
             messenger msg = new messenger();
             int error = e.getErrorCode();
             msg.messageOne("Errore - ricerca filementi per numero di segmenti","Si è verificato un errore. Codice errore: " + error + ".");
+            e.printStackTrace();
         }
     }
 
@@ -285,11 +253,15 @@ public class Ricerca {
             page.setText("");
             i = 0;
             num = 0;
-            Float inf = Float.parseFloat(ellInf.getText());
-            Float sup = Float.parseFloat(ellSup.getText());
-            if (inf < 2 || sup > 9) {
+            Double inf = Double.parseDouble(ellInf.getText());
+            Double sup = Double.parseDouble(ellSup.getText());
+            if (inf <= 1 || sup >= 10) {
                 messenger msg = new messenger();
                 msg.messageOne("Errore - ricerca per ellitticità","L'intervallo deve essere compreso tra 1 e 10 esclusi.");
+            }
+            if (inf >= sup) {
+                messenger msg = new messenger();
+                msg.messageOne("Errore - ricerca per ellitticità", "L'estremo inferiore dell'interallo di ricerca deve essere più piccolo di quello superiore.");
             } else {
                 ControllerFil source = new ControllerFil();
                 list = source.ricercaEll(inf, sup);
@@ -297,7 +269,9 @@ public class Ricerca {
                 if (list != null) {
                     i = 1;
                     int p = list.size() / 20;
-                    if (list.size() % 20 != 0) p++;
+                    if (list.size() % 20 != 0) {
+                        p = p + 1;
+                    }
                     numElements.setText(list.size() + " elementi trovati su " + tot);
                     page.setText("pagina " + i + " di " + p);
                     Filamento fil;
@@ -363,11 +337,7 @@ public class Ricerca {
     void initialize() {
         assert Inf != null : "fx:id=\"Inf\" was not injected: check your FXML file 'ricerca.fxml'.";
         assert Sup != null : "fx:id=\"Sup\" was not injected: check your FXML file 'ricerca.fxml'.";
-        assert plusInf != null : "fx:id=\"plusInf\" was not injected: check your FXML file 'ricerca.fxml'.";
-        assert plusSup != null : "fx:id=\"plusSup\" was not injected: check your FXML file 'ricerca.fxml'.";
         assert search != null : "fx:id=\"search\" was not injected: check your FXML file 'ricerca.fxml'.";
-        assert minusInf != null : "fx:id=\"minusInf\" was not injected: check your FXML file 'ricerca.fxml'.";
-        assert minusSup != null : "fx:id=\"minusSup\" was not injected: check your FXML file 'ricerca.fxml'.";
         assert data != null : "fx:id=\"data\" was not injected: check your FXML file 'ricerca.fxml'.";
         assert nome != null : "fx:id=\"nome\" was not injected: check your FXML file 'ricerca.fxml'.";
         assert id != null : "fx:id=\"id\" was not injected: check your FXML file 'ricerca.fxml'.";

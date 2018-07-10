@@ -6,22 +6,72 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilamentoPerNumEllLumDao {
+
+    /**
+     * Il metodo restituisce una lista di filamenti con un numero di segmenti compreso in un dato intevallo
+     * @return un oggetto List<Filamento>
+     * @throws SQLException se si verifica qualcosa di inaspettato nel database
+     * @see #buildList(ResultSet)
+     */
     public List<Filamento> search(int inf, int sup) throws  SQLException{
         ResultSet rs;
         List<Filamento> list;
         PreparedStatement stmt;
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
-        String sql = "SELECT * " +
-                     "FROM FILAMENTO " +
-                     "WHERE NOME IN ( " +
+       /* String sql = "SELECT * " +
+                       "FROM FILAMENTO " +
+                       "WHERE NOME IN ( " +
                                      "SELECT F.NOME " +
                                      "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
                                      "GROUP BY F.NOME, F.ID " +
-                                     "HAVING COUNT(*)<? AND COUNT(*)>? )";
+                                     "HAVING COUNT(*)<=? AND COUNT(*)>=? )";*/
+       String sql = "SELECT * " +
+               "FROM FILAMENTO " +
+               "WHERE (ID,SATELLITE) IN ( " +
+               "SELECT F.ID, F.SATELLITE " +
+               "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
+               "GROUP BY F.ID, F.SATELLITE " +
+               "HAVING COUNT(*)<=? AND COUNT(*)>=? )";
         stmt = c.prepareStatement(sql);
         stmt.setInt(1, sup);
         stmt.setInt(2, inf);
+        rs = stmt.executeQuery();
+        list = buildList(rs);
+        stmt.close();
+        rs.close();
+        c.close();
+        return list;
+    }
+
+    /**
+     * Il metodo restituisce una lista di filamenti con un numero di segmenti compreso nell'intevallo che va da 0 a un numero dato.
+     * @return un oggetto List<Filamento>
+     * @throws SQLException se si verifica qualcosa di inaspettato nel database
+     * @see #buildList(ResultSet)
+     */
+    public List<Filamento> searchAlt(int sup) throws SQLException{
+        ResultSet rs;
+        List<Filamento> list;
+        PreparedStatement stmt;
+        DataSource ds = new DataSource();
+        Connection c = ds.getConnection();
+       /* String sql = "SELECT * " +
+                       "FROM FILAMENTO " +
+                       "WHERE NOME NOT IN ( " +
+                                     "SELECT F.NOME " +
+                                     "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
+                                     "GROUP BY F.NOME, F.ID " +
+                                     "HAVING COUNT(*) > ?";*/
+        String sql = "SELECT * " +
+                     "FROM FILAMENTO " +
+                     "WHERE (ID,SATELLITE) NOT IN ( " +
+                                                  "SELECT F.ID, F.SATELLITE " +
+                                                  "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
+                                                  "GROUP BY F.ID, F.SATELLITE " +
+                                                  "HAVING COUNT(*) > ? )";
+        stmt = c.prepareStatement(sql);
+        stmt.setInt(1, sup);
         rs = stmt.executeQuery();
         list = buildList(rs);
         stmt.close();
@@ -48,16 +98,22 @@ public class FilamentoPerNumEllLumDao {
             strumento = rs.getString("strumento");
             satellite = rs.getString("satellite");
             flusso = rs.getString("flusso");
-            densita = rs.getString("densita");
-            ellitticita = rs.getInt("ellitticita");
-            contrasto = rs.getInt("contrasto");
-            temperatura = rs.getInt("temperatura");
+            densita = rs.getString("densità");
+            ellitticita = rs.getDouble("ellitticità");
+            contrasto = rs.getDouble("contrasto");
+            temperatura = rs.getDouble("temperatura");
             fil = new Filamento(id, nome, strumento, satellite, flusso, densita, ellitticita, contrasto, temperatura);
             list.add(fil);
         }
         return list;
     }
 
+    /**
+     * Il metodo restituisce una lista di filamenti aventi un contrasto maggiore di un dato valore
+     * @return un oggetto List<Filamento>
+     * @throws SQLException se si verifica qualcosa di inaspettato nel database
+     * @see #buildList(ResultSet)
+     */
     public List<Filamento> searchLum(float con) throws SQLException{
         ResultSet rs;
         List<Filamento> list;
@@ -77,7 +133,13 @@ public class FilamentoPerNumEllLumDao {
         return list;
     }
 
-    public List<Filamento> searchEll(Float inf, Float sup) throws SQLException{
+    /**
+     * Il metodo restituisce una lista di filamenti con l'ellitticità compresa in un dato intervallo
+     * @return un oggetto List<Filamento>
+     * @throws SQLException se si verifica qualcosa di inaspettato nel database
+     * @see #buildList(ResultSet)
+     */
+    public List<Filamento> searchEll(Double inf, Double sup) throws SQLException{
         ResultSet rs;
         List<Filamento> list;
         PreparedStatement stmt;
@@ -87,8 +149,8 @@ public class FilamentoPerNumEllLumDao {
                      "FROM FILAMENTO " +
                      "WHERE ELLITTICITà >= ? AND ELLITTICITà <= ? ";
         stmt = c.prepareStatement(sql);
-        stmt.setFloat(1, inf);
-        stmt.setFloat(2, sup);
+        stmt.setDouble(1, inf);
+        stmt.setDouble(2, sup);
         rs = stmt.executeQuery();
         list = buildList(rs);
         stmt.close();
@@ -97,26 +159,26 @@ public class FilamentoPerNumEllLumDao {
         return list;
     }
 
-    public int getTot() {
+    /**
+     * Il metodo restituisce il numero di filamenti presenti nel database
+     * @return un int
+     * @throws SQLException se si verifica qualcosa di inaspettato nel database
+     */
+    public int getTot() throws SQLException{
         ResultSet rs;
-        Statement stmt = null;
+        Statement stmt;
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
         int tot = 0;
         String sql = "SELECT COUNT(*) AS T FROM FILAMENTO ";
-        try {
-            stmt = c.createStatement();
-            rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                tot = rs.getInt("t");
-            }
-            stmt.close();
-            rs.close();
-            c.close();
-            return tot;
-        } catch (SQLException e) {
-            return 0;
+        stmt = c.createStatement();
+        rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            tot = rs.getInt("t");
         }
-
+        stmt.close();
+        rs.close();
+        c.close();
+        return tot;
     }
 }

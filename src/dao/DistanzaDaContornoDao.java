@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DistanzaDaContornoDao {
+
+    /**
+     * Il metodo restituisce la lista di segmenti appartenenti a un dato filamento
+     * @return un oggetto List<Segmento>
+     * @throws SQLException se si verifica qualcosa di inaspettato nel database
+     */
     public List<Segmento> search(int idFil, String satellite) throws SQLException {
         int id;
         String tipo;
@@ -127,6 +133,16 @@ public class DistanzaDaContornoDao {
         }
     }
 
+    /**
+     * Il metodo restituisce le distanze degli estremi di un dato segmento dal contorno del filamento a cui appartiene
+     * @return double[]
+     * @throws SQLException se si verifica qualcosa di inaspettato nel database
+     * @throws NoPerimetroException se il filamento è privo di punti di contorno
+     * @throws NoEstremoException se il segmento è privo di punti
+     * @see #getEstremoInf(int, String)
+     * @see #getEstremoSup(int, String)
+     * @see #getPerimetro(int, String)
+     */
     public double[] getDistance(int idS, int idF, String sat) throws SQLException, NoPerimetroException, NoEstremoException {
         List<Double> perim = getPerimetro(idF, sat);
         double[] inf = getEstremoInf(idS,sat);

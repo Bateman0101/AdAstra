@@ -21,6 +21,7 @@ public class DataSource {
         String password = properties.getProperty("PASSWORD");
         String dbUrl = properties.getProperty("DB_URL");
         String driver = properties.getProperty("DRIVER_CLASS_NAME");
+        //System.out.println(user + password + driver);
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(dbUrl, user, password);

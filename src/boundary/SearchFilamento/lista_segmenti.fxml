@@ -24,17 +24,16 @@
           </TableColumn>
         </columns>
       </TableView>
-      <Button fx:id="distanceBtn" layoutX="416.0" layoutY="143.0" mnemonicParsing="false" onAction="#distanceBtn" text="Distanza dal contorno" />
-      <TextField fx:id="nomeFil" layoutX="336.0" layoutY="38.0" />
-      <TextField fx:id="idFil" layoutX="336.0" layoutY="64.0" />
-      <TextField fx:id="satellite" layoutX="336.0" layoutY="90.0" />
-      <Text layoutX="273.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome:" />
-      <Text layoutX="273.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
-      <Text layoutX="273.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Satellite:" />
-      <TextField fx:id="idSegmento" layoutX="273.0" layoutY="143.0" prefHeight="31.0" prefWidth="143.0" promptText="ID segmentoAdam" />
-      <Text layoutX="276.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estremo Inferiore: " />
-      <Text layoutX="276.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estremo Superiore: " />
-      <Text fx:id="distanceInf" layoutX="405.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.98876684904099" />
-      <Text fx:id="distanceSup" layoutX="416.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.98877131938934" />
+      <Button fx:id="distanceBtn" layoutX="412.0" layoutY="143.0" mnemonicParsing="false" onAction="#distanceBtn" text="Calcola" />
+      <TextField fx:id="idFil" editable="false" layoutX="336.0" layoutY="9.0" />
+      <TextField fx:id="satellite" editable="false" layoutX="336.0" layoutY="39.0" />
+      <Text layoutX="268.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserire l'ID del segmento per il quale si vuole calcolare la distanza degli estremi dal contorno:" wrappingWidth="323.705078125" />
+      <Text layoutX="267.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
+      <Text layoutX="267.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Satellite:" />
+      <TextField fx:id="idSegmento" layoutX="269.0" layoutY="143.0" prefHeight="31.0" prefWidth="143.0" promptText="ID segmento" />
+      <Text layoutX="269.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estremo Inferiore: " />
+      <Text layoutX="269.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estremo Superiore: " />
+      <Text fx:id="distanceInf" layoutX="390.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="204.98876684904099" />
+      <Text fx:id="distanceSup" layoutX="398.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="198.98877131938934" />
    </children>
 </AnchorPane>
