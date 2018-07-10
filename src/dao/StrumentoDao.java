@@ -1,5 +1,7 @@
 package dao;
 
+import exceptions.NoSatelliteException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,14 +14,14 @@ public class StrumentoDao extends AbstractDao {
     private static final String COLUMN_SATELLITE = "satellite";
     private static final String COLUMN_BANDE = "bande";
 
-    public void insertStrumento(String nome, String satellite, String bande){
+    public void insertStrumento(String nome, String satellite, String bande) throws NoSatelliteException{
 
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
         SatelliteDao satD = new SatelliteDao();
         try {
             if(!satD.isPresentSatellite(satellite)){
-                satD.insertSatellite(satellite);
+                throw new NoSatelliteException("satellite not present");
             }
             if (!isPresentStrumento(nome)) {
                 PreparedStatement stmt;

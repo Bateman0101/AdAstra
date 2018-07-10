@@ -36,15 +36,15 @@ public class SearchStars {
         Double[] tipiStelle = new Double[8];
         vecPer = perD.getAllPerimetri(con);
 
-        double presIn = 0;
-        double prosIn = 0;
-        double unbIn = 0;
-        double formIn = 0;
+        double presIn = 0.00;
+        double prosIn = 0.00;
+        double unbIn = 0.00;
+        double formIn = 0.00;
 
-        double presEs = 0;
-        double prosEs = 0;
-        double unbEs = 0;
-        double formEs = 0;
+        double presEs = 0.00;
+        double prosEs = 0.00;
+        double unbEs = 0.00;
+        double formEs = 0.00;
 
         Double[] k = new Double[2];             //   pD ______________  pA
         Double[] pA = new Double[2];            //     |              |
@@ -168,16 +168,20 @@ public class SearchStars {
             }
 
             double totIn = presIn + prosIn + unbIn + formIn;
-            presIn = ((presIn) / totIn) * 100;
-            prosIn = ((prosIn) / totIn) * 100;
-            unbIn = ((unbIn) / totIn) * 100;
-            formIn = ((formIn) / totIn) * 100;
+            if(totIn != 0) {
+                presIn = ((presIn) / totIn) * 100;
+                prosIn = ((prosIn) / totIn) * 100;
+                unbIn = ((unbIn) / totIn) * 100;
+                formIn = ((formIn) / totIn) * 100;
+            }
 
             double totEs = presEs + prosEs + unbEs + formEs;
-            presEs = ((presEs) / totEs) * 100;
-            prosEs = ((prosEs) / totEs) * 100;
-            unbEs = ((unbEs) / totEs) * 100;
-            formEs = ((formEs) / totEs) * 100;
+            if (totEs != 0){
+                presEs = ((presEs) / totEs) * 100;
+                prosEs = ((prosEs) / totEs) * 100;
+                unbEs = ((unbEs) / totEs) * 100;
+                formEs = ((formEs) / totEs) * 100;
+            }
 
             tipiStelle[0] = presIn;
             tipiStelle[1] = prosIn;

@@ -27,7 +27,7 @@ public class UtenteHandler {
     }
 
     public void insertNewUser(String id, String nome, String cognome,
-                              String email, String password, String tipo) {
+                              String email, String password, String tipo) throws NoUserException{
 
         if (password.length() < 6 || id.length() < 6)
             return;
@@ -41,6 +41,10 @@ public class UtenteHandler {
         if (!dao.isUserPresent(id, password, c)){
 
             dao.insertNewUser(id, nome, cognome, email, password, tipo, c);
+        }
+        else{
+
+            throw new NoUserException("user already present");
         }
 
     }

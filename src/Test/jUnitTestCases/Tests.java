@@ -7,10 +7,12 @@ import entity.Filamento;
 import entity.Punto;
 import entity.Stella;
 import exceptions.NoFilamentoException;
+import exceptions.NoSatelliteException;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.util.ArrayList;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,20 +37,26 @@ public class Tests {
             if (filDao.isPresentFilamento(1, "Spitzer", c))
                 return;
 
-            satDao.insertSatellite("Spitzer");
-            satDao.insertSatellite("Herschel");
-            strumDao.insertStrumento("OTHER", "Herschel", "3/7/6");
-            strumDao.insertStrumento("IRAC", "Spitzer", "3/7/6");
-            filDao.insertFil(1,"Fil","332.3","4.344",7.43,3.5,3,"IRAC", "Spitzer", c);
-            pDao.insertPunto(-0.43, 10.8, c);
-            pDao.insertPunto(-0.42, 10.83, c);
-            pDao.insertPunto(-0.40, 10.82, c);
-            pDao.insertPunto(0.788273, 7.524343, c);
-            perDao.insertPuntoPerimetro(-0.43, 10.8, "Spitzer", 1, c);
-            perDao.insertPuntoPerimetro(-0.42, 10.83, "Spitzer", 1, c);
-            perDao.insertPuntoPerimetro(-0.40, 10.82, "Spitzer", 1, c);
-            segDao.insertSegmento(5,1,"E","Spitzer", c);
-            stellaDao.insertStella(35593, "HIGALPS007.5238+0.7890", "UNBOUND", 0.788273, "OTHER", "Herschel", 0.788273, 7.524343, c);
+                Date date = Date.valueOf("2016-07-09");
+                satDao.insertSatellite("Spitzer", date);
+                satDao.insertSatellite("Herschel", date);
+                try {
+                    strumDao.insertStrumento("OTHER", "Herschel", "3/7/6");
+                    strumDao.insertStrumento("IRAC", "Spitzer", "3/7/6");
+                }catch(NoSatelliteException e){
+                    e.printStackTrace();
+                }
+                filDao.insertFil(1, "Fil", "332.3", "4.344", 7.43, 3.5, 3, "IRAC", "Spitzer", c);
+                pDao.insertPunto(-0.43, 10.8, c);
+                pDao.insertPunto(-0.42, 10.83, c);
+                pDao.insertPunto(-0.40, 10.82, c);
+                pDao.insertPunto(0.788273, 7.524343, c);
+                perDao.insertPuntoPerimetro(-0.43, 10.8, "Spitzer", 1, c);
+                perDao.insertPuntoPerimetro(-0.42, 10.83, "Spitzer", 1, c);
+                perDao.insertPuntoPerimetro(-0.40, 10.82, "Spitzer", 1, c);
+                segDao.insertSegmento(5, 1, "E", "Spitzer", c);
+                stellaDao.insertStella(35593, "HIGALPS007.5238+0.7890", "UNBOUND", 0.788273, "OTHER", "Herschel", 0.788273, 7.524343, c);
+
     }
 
     @Test

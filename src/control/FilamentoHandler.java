@@ -17,6 +17,12 @@ import java.util.concurrent.Executor;
 
 public class FilamentoHandler {
 
+
+    /**Metodo per calcolare il max di un array di double
+     *
+     * @param l
+     * @return
+     */
     public double findMin(ArrayList<Double> l) {
 
         double minValue = l.get(0);
@@ -28,6 +34,11 @@ public class FilamentoHandler {
         return minValue;
     }
 
+    /**Metodo per calcolare il min di un array di double
+     *
+     * @param l
+     * @return
+     */
     public double findMax(ArrayList<Double> l) {
 
         double maxValue = l.get(0);
@@ -38,6 +49,18 @@ public class FilamentoHandler {
         }
         return maxValue;
     }
+
+    /**Formula utilizzata per calcolare se una Stella è interna ad un Filamento
+     *
+     *
+     * @param lonS
+     * @param latS
+     * @param lonP
+     * @param latP
+     * @param lonPS
+     * @param latPS
+     * @return
+     */
 
     public double formula(double lonS, double latS, double lonP, double latP,
                           double lonPS, double latPS) {
@@ -56,6 +79,13 @@ public class FilamentoHandler {
 
         return res;
     }
+
+    /**Formula per calcolare la posizione di un centroide
+     *
+     *
+     * @param p
+     * @return
+     */
 
     public Punto centroid(ArrayList<Punto> p) {
 
@@ -91,6 +121,13 @@ public class FilamentoHandler {
 
     }
 
+    /**Formula per calcolare l'estensione di un Filamento
+     *
+     *
+     * @param p
+     * @return
+     */
+
     public double extension (ArrayList<Punto> p) {
 
         ArrayList<Double> listLat = new ArrayList<>();
@@ -118,6 +155,16 @@ public class FilamentoHandler {
 
     }
 
+    /**Metodo per verificare se un Punto è interno ad un quadrato
+     *
+     *
+     * @param clat
+     * @param clon
+     * @param l
+     * @param p
+     * @return
+     */
+
     public boolean checkSquare(double clat, double clon, double l, ArrayList<Punto> p) {
 
         double edgeLat = clat - l / 2;
@@ -132,6 +179,15 @@ public class FilamentoHandler {
 
         return true;
     }
+
+    /**Metodo per verificare se un Punto è all'interno di un cerchio
+     *
+     * @param clat
+     * @param clon
+     * @param r
+     * @param p
+     * @return
+     */
 
     public boolean checkCircle(double clat, double clon, double r, ArrayList<Punto> p) {
 
@@ -149,6 +205,15 @@ public class FilamentoHandler {
     }
 
 
+    /**Metodo per computare il centroide di un Filamento
+     *
+     *
+     * @param id
+     * @param satellite
+     * @return
+     * @throws NoFilamentoException
+     */
+
     public Punto computeCentroid(int id, String satellite) throws NoFilamentoException{
 
         FilamentoDao dao = new FilamentoDao();
@@ -158,6 +223,15 @@ public class FilamentoHandler {
 
         return c;
     }
+
+    /**Metodo per computare l'estensione di un filamento
+     *
+     *
+     * @param id
+     * @param satellite
+     * @return
+     * @throws NoFilamentoException
+     */
 
     public double computeExtension(int id, String satellite) throws NoFilamentoException{
 
@@ -169,6 +243,13 @@ public class FilamentoHandler {
         return e;
     }
 
+    /**Metodo per trovare i Segmenti di un Filamento
+     *
+     *
+     * @param id
+     * @param satellite
+     * @return
+     */
     public ArrayList<Integer> findSegments(int id, String satellite) {
 
         FilamentoDao dao = new FilamentoDao();
@@ -176,6 +257,17 @@ public class FilamentoHandler {
 
         return list;
     }
+
+    /**
+     * Metodo per trovare tutti i Filamenti che si trovano all'interno di una regione
+     * a forma di quadrato
+     *
+     * @param centerLat
+     * @param centerLon
+     * @param lato
+     * @return
+     * @throws NoFilamentoException
+     */
 
     public ArrayList<Filamento> isInsideSquare(double centerLat, double centerLon, double lato) throws NoFilamentoException{
 
@@ -197,6 +289,17 @@ public class FilamentoHandler {
     return result;
 }
 
+    /**
+     * Metodo per trovare tutti i Filamenti che si trovano all'interno di una regione
+     * a forma di cerchio
+     *
+     *
+     * @param centerLat
+     * @param centerLon
+     * @param radius
+     * @return
+     * @throws NoFilamentoException
+     */
     public ArrayList<Filamento> isInsideCircle(double centerLat, double centerLon, double radius) throws NoFilamentoException{
 
         FilamentoDao dao = new FilamentoDao();
@@ -218,6 +321,14 @@ public class FilamentoHandler {
         return result;
     }
 
+    /**Questo metodo serve per trovare le Stelle interne ad un Filamento
+     *
+     *
+     * @param id
+     * @param satellite
+     * @return
+     * @throws NoFilamentoException
+     */
     public ArrayList<Stella> stelleInFilamento(int id, String satellite) throws NoFilamentoException{
 
 

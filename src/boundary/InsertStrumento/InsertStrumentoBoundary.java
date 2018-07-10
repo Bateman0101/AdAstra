@@ -2,6 +2,7 @@ package boundary.InsertStrumento;
 
 import boundary.Main;
 import control.SatelliteHandler;
+import exceptions.NoSatelliteException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -44,8 +45,26 @@ public class InsertStrumentoBoundary {
 
         SatelliteHandler ctrl = new SatelliteHandler();
 
-        ctrl.insertStrumento(nameS, satelliteS, bandeS);
+        try {
 
+            ctrl.insertStrumento(nameS, satelliteS, bandeS);
+
+        getAlert("Strumento inserito.");
+
+        clear();
+
+        }catch(NoSatelliteException e){
+            getAlert("Satellite non presente nel sistema.");
+
+            clear();
+        }
+
+    }
+
+    public void clear(){
+        name.clear();
+        bande.clear();
+        satelliteEntry.clear();
     }
 
     public void getHomePage() {
