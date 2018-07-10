@@ -183,7 +183,7 @@ public class SearchObjectsInFilamento {
         Vector<StellaDistanza> steDist = new Vector<>();
         Vector<PuntoPerimetro> vector = new Vector<PuntoPerimetro>();
         PerimetroDao perD = new PerimetroDao();
-        vector = perD.getAllPerimetriFil(idFil, con);
+        //vector = perD.getAllPerimetriFil(idFil, con);
         StellaDao sD = new StellaDao();
         double dist;
         Stella stella;
@@ -194,6 +194,20 @@ public class SearchObjectsInFilamento {
          */
 
         PuntoPerimetro pTest1 = new PuntoPerimetro(1.00, 1.00, "Spitzer", 380);
+        PuntoPerimetro pTest2 = new PuntoPerimetro(2.00, 1.00, "Spitzer", 380);
+        PuntoPerimetro pTest3 = new PuntoPerimetro(2.00, 2.00, "Spitzer", 380);
+        PuntoPerimetro pTest4 = new PuntoPerimetro(1.50, 1.50, "Spitzer", 380);
+        PuntoPerimetro pTest5 = new PuntoPerimetro(1.75, 1.75, "Spitzer", 380);
+        PuntoPerimetro pTest6 = new PuntoPerimetro(1.25, 1.25, "Spitzer", 380);
+
+        vector.add(pTest1);
+        vector.add(pTest2);
+        vector.add(pTest3);
+        vector.add(pTest4);
+        vector.add(pTest5);
+        vector.add(pTest6);
+
+
 
         Stella stTest1 = new Stella(1, "Test1", "PRESTELLAR", 20.00, "MIPS", "Spitzer",
                 -20.37483, 272.0743);

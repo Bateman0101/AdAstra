@@ -59,7 +59,7 @@ public class InsertFileUI {
             switch (type) {
                 case "Filamento":
                     CsvFilamenti csvFilamenti = new CsvFilamenti();
-                    csvFilamenti.insert(filePath);
+                    csvFilamenti.insert(filePath, satellite);
                     break;
                 case "Stella":
                     CsvStelle csvStelle = new CsvStelle();

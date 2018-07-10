@@ -27,18 +27,18 @@ public class   CsvFilamenti {
         switch (satellite) {
             case "Spitzer":
                 System.out.println(csvFileSpitzer);
-                insert(csvFileSpitzer);
+                insert(csvFileSpitzer, satellite);
                 break;
 
             case "Herschel":
                 System.out.println(csvFileHerschel);
-                insert(csvFileHerschel);
+                insert(csvFileHerschel, satellite);
                 break;
         }
 
     }
 
-    public void insert(String filePath) {
+    public void insert(String filePath, String satellite) {
         String line;
         String cvsSplitBy = ",";
         FilamentoDao fD = new FilamentoDao();
@@ -52,24 +52,26 @@ public class   CsvFilamenti {
                 // use comma as separator
 
                 String[] row = line.split(cvsSplitBy);
-                if (!row[0].equals("IDFIL") | !row[0].equals("'IDFIL")) {
-                    if(!fD.isPresentFilamento(Integer.parseInt(row[0]), row[7], c)) {
+                if (!row[0].equals("IDFIL")) {
+                    if(!fD.isPresentFilamento(Integer.parseInt(row[0]), satellite, c)) {
                         fD.insertFil(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
-                                Double.parseDouble(row[5]), Double.parseDouble(row[6]),  row[7], row[8], c);
+                                Double.parseDouble(row[5]), Double.parseDouble(row[6]),  satellite, row[8], c);
                         System.out.println("INSERITO IN DB IL FILAMENTO " + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
-                                row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + row[8]);
+                                row[4] + " | " + row[5] + " | " + row[6] + " | " + satellite + " | " + row[8]);
                     }else {
-                        Filamento filamento = fD.getFilamento(Integer.parseInt(row[0]), row[7], c);
-                        if (!filamento.getNome().equals(row[1]) |
-                                !filamento.getFlusso().equals(row[2]) |
-                                !filamento.getDensita().equals(row[3]) |
-                                !(filamento.getEllitticita() == Double.parseDouble(row[4])) |
-                                !(filamento.getContrasto() == Double.parseDouble(row[5])) |
-                                !(filamento.getTemperatura() == Double.parseDouble(row[6])) |
-                                !filamento.getStrumento().equals(row[7])){
+                        Filamento filamento = fD.getFilamento(Integer.parseInt(row[0]), satellite, c);
+                        /*
+                        if (!filamento.getNome().equals(row[1]) ||
+                                !filamento.getFlusso().equals(row[2]) ||
+                                !filamento.getDensita().equals(row[3]) ||
+                                !(filamento.getEllitticita() == Double.parseDouble(row[4])) ||
+                                !(filamento.getContrasto() == Double.parseDouble(row[5])) ||
+                                !(filamento.getTemperatura() == Double.parseDouble(row[6])) ||
+                                !filamento.getStrumento().equals(satellite)){
                             fD.updateFilamento(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
-                                    Double.parseDouble(row[5]), Double.parseDouble(row[6]),  row[7], row[8], c);
-                        }
+                                    Double.parseDouble(row[5]), Double.parseDouble(row[6]),  satellite, row[8], c);
+
+                        }*/
 
 
                         System.out.println("FILAMENTO " + row[0] + " E' GIA' PRESENTE NEL DB");
