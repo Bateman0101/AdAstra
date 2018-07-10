@@ -36,15 +36,15 @@ public class SearchStars {
         Double[] tipiStelle = new Double[8];
         vecPer = perD.getAllPerimetri(con);
 
-        double presIn = 0;
-        double prosIn = 0;
-        double unbIn = 0;
-        double formIn = 0;
+        double presIn = 0.00;
+        double prosIn = 0.00;
+        double unbIn = 0.00;
+        double formIn = 0.00;
 
-        double presEs = 0;
-        double prosEs = 0;
-        double unbEs = 0;
-        double formEs = 0;
+        double presEs = 0.00;
+        double prosEs = 0.00;
+        double unbEs = 0.00;
+        double formEs = 0.00;
 
         Double[] k = new Double[2];             //   pD ______________  pA
         Double[] pA = new Double[2];            //     |              |
