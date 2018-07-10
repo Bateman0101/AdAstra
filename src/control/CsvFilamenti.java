@@ -55,9 +55,9 @@ public class   CsvFilamenti {
                 if (!row[0].equals("IDFIL")) {
                     if(!fD.isPresentFilamento(Integer.parseInt(row[0]), satellite, c)) {
                         fD.insertFil(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
-                                Double.parseDouble(row[5]), Double.parseDouble(row[6]),  row[7], satellite, c);
+                                Double.parseDouble(row[5]), Double.parseDouble(row[6]),  row[8], satellite, c);
                         System.out.println("INSERITO IN DB IL FILAMENTO " + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
-                                row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + satellite);
+                                row[4] + " | " + row[5] + " | " + row[6] + " | " + row[8] + " | " + satellite);
                     }else {
                         Filamento filamento = fD.getFilamento(Integer.parseInt(row[0]), satellite, c);
                         /*
