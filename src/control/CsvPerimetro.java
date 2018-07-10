@@ -1,6 +1,7 @@
 package control;
 
 import dao.DataSource;
+import dao.FilamentoDao;
 import dao.PerimetroDao;
 import dao.PuntoDao;
 
@@ -15,6 +16,7 @@ public class CsvPerimetro {
         String line;
         String cvsSplitBy = ",";
         PerimetroDao perD = new PerimetroDao();
+        FilamentoDao fD = new FilamentoDao();
         PuntoDao pD = new PuntoDao();
         DataSource dS = new DataSource();
         Connection c = dS.getConnection();
@@ -30,18 +32,20 @@ public class CsvPerimetro {
                         pD.insertPunto(Double.parseDouble(row[2]), Double.parseDouble(row[1]), c);
                         System.out.println("INSERT PUNTO (" + Double.parseDouble(row[2]) + " , "
                                 + Double.parseDouble(row[1]) + ") IN DB");
-                    }else {
+                    } else {
                         System.out.println("CHECKING IN DB IF PUNTI ARE PRESENT YET");
 
                     }
-                    if (!perD.isPresentPerimetro(Double.parseDouble(row[2]), Double.parseDouble(row[1]),
-                            satellite, Integer.parseInt(row[0]), c)) {
-                        perD.insertPuntoPerimetro(Double.parseDouble(row[2]),
-                                Double.parseDouble(row[1]), satellite, Integer.parseInt(row[0]), c);
-                        System.out.println("INSERT PERIMETRO_" + satellite + " (" + Integer.parseInt(row[0]) + " , " + Double.parseDouble(row[1]) +
-                                " , " + row[2] + ") IN DB");
-                    }else {
-                        System.out.println("CHECKING IN DB IF PERIMETRO ARE PRESENT YET");
+                    if (!fD.isPresentFilamento(Integer.parseInt(row[0]), satellite, c)) {
+                        if (!perD.isPresentPerimetro(Double.parseDouble(row[2]), Double.parseDouble(row[1]),
+                                satellite, Integer.parseInt(row[0]), c)) {
+                            perD.insertPuntoPerimetro(Double.parseDouble(row[2]),
+                                    Double.parseDouble(row[1]), satellite, Integer.parseInt(row[0]), c);
+                            System.out.println("INSERT PERIMETRO_" + satellite + " (" + Integer.parseInt(row[0]) + " , " + Double.parseDouble(row[1]) +
+                                    " , " + row[2] + ") IN DB");
+                        } else {
+                            System.out.println("CHECKING IN DB IF PERIMETRO ARE PRESENT YET");
+                        }
                     }
                 }
             }
