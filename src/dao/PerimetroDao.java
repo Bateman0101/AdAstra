@@ -5,6 +5,7 @@ import entity.PuntoPerimetro;
 import java.sql.*;
 import java.util.Vector;
 
+@SuppressWarnings("ALL")
 public class PerimetroDao extends AbstractDao {
 
     private static final String TABLE_NAME = "perimetro";
@@ -47,6 +48,35 @@ public class PerimetroDao extends AbstractDao {
         try {
             s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             String sql = "SELECT * FROM " + TABLE_NAME;
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                try {
+                    PuntoPerimetro puntoPerimetro = new PuntoPerimetro(rs.getDouble(COLUMN_LATITUDINE),
+                            rs.getDouble(COLUMN_LONGITUDINE),
+                            rs.getString(COLUMN_FILAMENTO_SATELLITE),
+                            rs.getInt(COLUMN_FILAMENTO_ID));
+                    vec.add(puntoPerimetro);
+                } catch (NullPointerException n) {
+                    n.printStackTrace();
+                }
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeStatement(s);
+        }
+        return vec;
+    }
+
+    public Vector<PuntoPerimetro> getAllPerimetriFil(int idFil, Connection con) {
+        Statement s = null;
+        Vector<PuntoPerimetro> vec = new Vector<>();
+
+        try {
+            s = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_FILAMENTO_ID + " = '" +  idFil + "'";
             ResultSet rs = s.executeQuery(sql);
             while (rs.next()) {
                 try {

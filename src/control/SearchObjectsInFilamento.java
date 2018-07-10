@@ -9,7 +9,6 @@ import entity.StellaDistanza;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Vector;
 
 @SuppressWarnings("ALL")
@@ -24,17 +23,39 @@ public class SearchObjectsInFilamento {
      * @param con
      * @return Boolean
      */
-    public Boolean isStellaInFil(double longitudine, double latitudine, Connection con) {
+    public Boolean isStellaInFil(int idFil, double longitudine, double latitudine, Connection con) {
 
         PerimetroDao perD = new PerimetroDao();
         Boolean bool = false;
-        Vector<PuntoPerimetro> vec;
-        //DataSource dS = new DataSource();
-        //Connection con = dS.getConnection();
-        vec = perD.getAllPerimetri(con);
+        Vector<PuntoPerimetro> vec = new Vector<PuntoPerimetro>();
+
+        /*
+        Per fare un test del metodo commentare la parte DAO ed utilizzare i dati forniti a seguire;
+         */
+
+        /*
+        PuntoPerimetro pTest1 = new PuntoPerimetro(1.00,1.00,"Spitzer",380);
+        PuntoPerimetro pTest2 = new PuntoPerimetro(4.00,1.00,"Spitzer",380);
+        PuntoPerimetro pTest3 = new PuntoPerimetro(4.00,4.00,"Spitzer",380);
+        PuntoPerimetro pTest4 = new PuntoPerimetro(1.00,4.00,"Spitzer",380);
+        PuntoPerimetro pTest5 = new PuntoPerimetro(2.50,3.50,"Spitzer",380);
+        Vector<PuntoPerimetro> vecTest = new Vector<PuntoPerimetro>();
+        vecTest.add(pTest1);
+        System.out.println("pTest1 aggiunto ");
+        vecTest.add(pTest2);
+        System.out.println("pTest2 aggiunto ");
+        vecTest.add(pTest3);
+        System.out.println("pTest3 aggiunto ");
+        vecTest.add(pTest4);
+        System.out.println("pTest4 aggiunto ");
+        vecTest.add(pTest5);
+        System.out.println("pTest5 aggiunto ");
+        */
+        vec = perD.getAllPerimetriFil(idFil, con);
         double longSte = longitudine;
         double latSte = latitudine;
         int l = vec.size();
+        //int l = vec.size();
         int numPer = 0;
         int id;
         String satellite;
@@ -42,14 +63,18 @@ public class SearchObjectsInFilamento {
         String satelliteSuc;
         double result = 0;
 
-        while (numPer < l - 1) {
+        while (numPer < l ) {
 
-            System.out.println("First while " + numPer + " < " + l);
+            //System.out.println("First while " + numPer + " < " + l);
 
 
+            //PuntoPerimetro pPer = vec.get(numPer);
             PuntoPerimetro pPer = vec.get(numPer);
+
             //System.out.println(pPer.getLongitudine() + " " + pPer.getLatitudine());
-            PuntoPerimetro pPerSuc = vec.get(numPer + 1);
+            //PuntoPerimetro pPerSuc = vec.get(numPer + 1);
+            PuntoPerimetro pPerSuc = vec.get(numPer);
+
             //System.out.println(pPerSuc.getLongitudine() + " " + pPerSuc.getLatitudine());
 
             id = pPer.getFilamento();
@@ -99,11 +124,11 @@ public class SearchObjectsInFilamento {
      * @param con
      * @return Stella
      */
-    public Stella stellaInFil(double longitudine, double latitudine, Connection con) {
+    public Stella stellaInFil(int idFil, double longitudine, double latitudine, Connection con) {
         StellaDao sD = new StellaDao();
         Stella stella = null;
 
-        if (this.isStellaInFil(longitudine, latitudine, con)) {
+        if (this.isStellaInFil(idFil, longitudine, latitudine, con)) {
             stella = sD.getStella(latitudine, longitudine, con);
         }
         return stella;
@@ -174,7 +199,7 @@ public class SearchObjectsInFilamento {
 
             }
 
-            numPer++;
+            numPer = numPer + 1;
         }
 
         if (result >= 0.01) {
@@ -204,8 +229,31 @@ public class SearchObjectsInFilamento {
         double dist;
         Stella stella;
         //StellaDistanza stellaDistanza;
+
+        /*
+        Commentare il DAO ed utilizzare i dati seguenti per fare i test
+         */
+
+        Stella stTest1 = new Stella(1, "Test1", "PRESTELLAR", 20.00, "MIPS", "Spitzer",
+                -20.37483, 272.0743);
+        Stella stTest2 = new Stella(2, "Test2", "PRESTELLAR", 20.00, "MIPS", "Spitzer",
+                1.00, 1.00);
+        Stella stTest3 = new Stella(3, "Test3", "PRESTELLAR", 20.00, "MIPS", "Spitzer",
+                1.00, 1.00);
+        Stella stTest4 = new Stella(4, "Test4", "PRESTELLAR", 20.00, "MIPS", "Spitzer",
+                1.00, 1.00);
+        Stella stTest5 = new Stella(5, "Test5", "PRESTELLAR", 20.00, "MIPS", "Spitzer",
+                1.00, 1.00);
+
+
         Vector<Stella> vec = new Vector<>();
         vec = sD.getAllStars(con);
+        /*vec.add(stTest1);
+        vec.add(stTest2);
+        vec.add(stTest3);
+        vec.add(stTest4);
+        vec.add(stTest5);*/
+
         int size = vec.size();
         int i = 0;
         try {
@@ -213,7 +261,7 @@ public class SearchObjectsInFilamento {
                 stella = vec.get(i);
                 double lat = stella.getLatitudine();
                 double lon = stella.getLongitudine();
-                if (this.isStellaInFil(lon, lat, con)) {
+                if (this.isStellaInFil(idFil, lon, lat, con)) {
                     dist = this.minDistance(lat, lon, idFil, satellite, con);
                     System.out.println(stella);
                     StellaDistanza stellaDistanza = new StellaDistanza(
@@ -229,8 +277,9 @@ public class SearchObjectsInFilamento {
 
                     steDist.add(stellaDistanza);
                     //steDist.add(dist);
-                    i++;
                 }
+                i = i+1;
+
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -333,12 +382,19 @@ public class SearchObjectsInFilamento {
         double div;
         double res;
 
-        num = (lonP - lonS) * (latPS - latS) - (latP - latS) * (lonPS - lonS);
-        den = (lonP - lonS) * (lonPS - lonS) + (latP - latS) * (latPS - latS);
+        num = ((lonP - lonS) * (latPS - latS)) - ((latP - latS) * (lonPS - lonS));
+        den = ((lonP - lonS) * (lonPS - lonS)) + ((latP - latS) * (latPS - latS));
 
-        div = num / den;
+        if (!(den == 0)){
+            div = num / den;
+            System.out.println(div);
+            res = Math.abs(Math.atan(div));
 
-        res = Math.abs(Math.atan(div));
+        }else {
+            res = 0.00;
+        }
+
+
 
         return res;
     }
@@ -348,20 +404,35 @@ public class SearchObjectsInFilamento {
         DataSource ds = new DataSource();
         Connection con = ds.getConnection();
         Vector<StellaDistanza> vector = new Vector<>();
-        StellaDao sD = new StellaDao();
-        Vector<Stella> vec = new Vector<>();
-        vec = sD.getAllStars(con);
-        vector = s.positionStella(380, "Spitzer");
+        //vector = s.positionStella(380, "Spitzer");
+        //StellaDao sD = new StellaDao();
+        //Vector<Stella> vec = new Vector<>();
+        //vec = sD.getAllStars(con);
+        //vector = s.positionStella(380, "Spitzer");
         //Stella stella = new Stella(1,"ciao","luce", 20.20, "A", "ab",20.02,20.2);
         //vector.add(stella);
         //vector.add(20.2);
+        //boolean res = s.isStellaInFil(381,1.2,1.2,con);
+        //System.out.println(res);
         int size = vector.size();
-        int lung = vec.size();
+        //int lung = vec.size();
         int i = 0;
-        int j = 0;
+        try {
+            double res = s.formula(1.00,1.00,1.00,1.00,1.00,1.00);
+            System.out.println(res);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(size == 0){
+            System.out.println("EMPTY");
+        }
+        //int j = 0;
         while(i < size){
             System.out.println(vector.get(i));
-            i++;
+
+            i = i+1;
         }
         /*while(j < lung){
             System.out.println(vec.get(j));

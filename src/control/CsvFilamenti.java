@@ -2,6 +2,7 @@ package control;
 
 import dao.DataSource;
 import dao.FilamentoDao;
+import entity.Filamento;
 
 import java.io.*;
 import java.sql.Connection;
@@ -58,6 +59,19 @@ public class   CsvFilamenti {
                         System.out.println("INSERITO IN DB IL FILAMENTO " + row[0] + " | " + row[1] + " | " + row[2] + " | " + row[3] + " | " +
                                 row[4] + " | " + row[5] + " | " + row[6] + " | " + row[7] + " | " + row[8]);
                     }else {
+                        Filamento filamento = fD.getFilamento(Integer.parseInt(row[0]), row[7], c);
+                        if (!filamento.getNome().equals(row[1]) |
+                                !filamento.getFlusso().equals(row[2]) |
+                                !filamento.getDensita().equals(row[3]) |
+                                !(filamento.getEllitticita() == Double.parseDouble(row[4])) |
+                                !(filamento.getContrasto() == Double.parseDouble(row[5])) |
+                                !(filamento.getTemperatura() == Double.parseDouble(row[6])) |
+                                !filamento.getStrumento().equals(row[7])){
+                            fD.updateFilamento(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
+                                    Double.parseDouble(row[5]), Double.parseDouble(row[6]),  row[7], row[8], c);
+                        }
+
+
                         System.out.println("FILAMENTO " + row[0] + " E' GIA' PRESENTE NEL DB");
                     }
                 }
