@@ -2,6 +2,7 @@ package dao;
 
 import entity.Filamento;
 import entity.Punto;
+import entity.Strumento;
 import exceptions.NoFilamentoException;
 import jUnitTestCases.Tests;
 import org.postgresql.util.PSQLException;
@@ -60,6 +61,60 @@ public class FilamentoDao extends AbstractDao {
         }catch (PSQLException e){
             e.printStackTrace();
         }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public Filamento getFilamento(int id, String satellite, Connection con){
+        Statement stmt;
+        Filamento f = null;
+        try {
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + "='" + id
+                    + "' AND " + COLUMN_SATELLITE + " = '" + satellite + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) try {
+                f = new Filamento(rs.getInt(COLUMN_ID),
+                        rs.getString(COLUMN_NOME),
+                        rs.getString(COLUMN_STRUMENTO),
+                        rs.getString(COLUMN_SATELLITE),
+                        rs.getString(COLUMN_FLUSSO),
+                        rs.getString(COLUMN_DENSITA),
+                        rs.getDouble(COLUMN_ELLITTICITA),
+                        rs.getDouble(COLUMN_CONTRASTO),
+                        rs.getDouble(COLUMN_TEMPERATURA));
+            }catch (NullPointerException n){
+                n.printStackTrace();
+                System.exit(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return f;
+    }
+
+    public void updateFilamento(int id, String nome, String flusso, String densita, double ellitticita,
+                                double contrasto, double temperatura, String strumento, String satellite, Connection c){
+        try{
+            PreparedStatement stmt;
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE " + TABLE_NAME)
+                    .append(" SET ")
+                    .append(COLUMN_NOME).append(" = '").append(nome).append(", ")
+                    .append(COLUMN_FLUSSO).append(" = '").append(flusso).append(", ")
+                    .append(COLUMN_DENSITA).append(" = '").append(densita).append(", ")
+                    .append(COLUMN_ELLITTICITA).append(" = '").append(ellitticita).append(", ")
+                    .append(COLUMN_CONTRASTO).append(" = '").append(contrasto).append(", ")
+                    .append(COLUMN_TEMPERATURA).append(" = '").append(temperatura)
+                    .append(COLUMN_STRUMENTO).append(" = '").append(strumento)
+                    .append(" WHERE ").append(COLUMN_ID).append(" = '").append(id)
+                    .append(" AND ").append(COLUMN_SATELLITE).append(" = '").append(satellite)
+                    .append("'");
+            stmt = c.prepareStatement(String.valueOf(sql), ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            stmt.executeUpdate();
+
+        }catch (Exception e){
             e.printStackTrace();
         }
 
