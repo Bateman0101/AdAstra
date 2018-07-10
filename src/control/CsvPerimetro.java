@@ -36,7 +36,7 @@ public class CsvPerimetro {
                         System.out.println("CHECKING IN DB IF PUNTI ARE PRESENT YET");
 
                     }
-                    if (!fD.isPresentFilamento(Integer.parseInt(row[0]), satellite, c)) {
+                    if (fD.isPresentFilamento(Integer.parseInt(row[0]), satellite, c)) {
                         if (!perD.isPresentPerimetro(Double.parseDouble(row[2]), Double.parseDouble(row[1]),
                                 satellite, Integer.parseInt(row[0]), c)) {
                             perD.insertPuntoPerimetro(Double.parseDouble(row[2]),

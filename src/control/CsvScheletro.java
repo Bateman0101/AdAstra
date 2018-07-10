@@ -36,21 +36,25 @@ public class CsvScheletro {
                     int num = Integer.parseInt(row[5]);
                     String flusso = row[6];
 
-                    if (!sD.isPresentSegmento(idSeg, idFil, tipo, satellite, con)) {
-                        sD.insertSegmento(idSeg, idFil, tipo, satellite, con);
-                        System.out.println("insert SEGMENTO " + idSeg);
+                    if (fD.isPresentFilamento(Integer.parseInt(row[0]), satellite, con)) {
 
-                    }
-                    if (!pSegD.isPresentPuntoSegmento(lat, lon, con)){
-                        if(!pD.isPresentPunto(lat, lon, con)){
-                            pD.insertPunto(lat, lon, con);
-                            System.out.println("insert PUNTO " + lat + " " + lon);
+                        if (!sD.isPresentSegmento(idSeg, idFil, tipo, satellite, con)) {
+                            sD.insertSegmento(idSeg, idFil, tipo, satellite, con);
+                            System.out.println("insert SEGMENTO " + idSeg);
+                            if (!pSegD.isPresentPuntoSegmento(lat, lon, con)){
+                                if(!pD.isPresentPunto(lat, lon, con)){
+                                    pD.insertPunto(lat, lon, con);
+                                    System.out.println("insert PUNTO " + lat + " " + lon);
+
+                                }
+                                pSegD.insertPuntoSegmento(idSeg, lat, lon, num, flusso, satellite, tipo, con);
+                                System.out.println("insert PUNTO_SEGMENTO " + lat + " " + lon);
+
+                            }
 
                         }
-                        pSegD.insertPuntoSegmento(idSeg, lat, lon, num, flusso, satellite, tipo, con);
-                        System.out.println("insert PUNTO_SEGMENTO " + lat + " " + lon);
-
                     }
+
 
                     /*
                     if (fD.isPresentFilamento(Integer.parseInt(row[0]), satellite, con)) {
