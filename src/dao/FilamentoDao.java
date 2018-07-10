@@ -4,7 +4,7 @@ import entity.Filamento;
 import entity.Punto;
 import entity.Strumento;
 import exceptions.NoFilamentoException;
-import jUnitTestCases.Tests;
+
 import org.postgresql.util.PSQLException;
 
 import java.sql.*;
@@ -292,10 +292,6 @@ public class FilamentoDao extends AbstractDao {
         }
 
 
-    public static void main(String[] args) {
 
-        Tests t = new Tests();
-        t.findInRegion();
-    }
 }
 

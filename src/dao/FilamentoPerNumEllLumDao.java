@@ -54,8 +54,8 @@ public class FilamentoPerNumEllLumDao {
                      "WHERE NOME NOT IN ( " +
                                      "SELECT F.NOME " +
                                      "FROM FILAMENTO AS F JOIN SEGMENTO AS S ON S.FILAMENTO=F.ID AND S.SATELLITE=F.SATELLITE " +
-                                     "GROUP BY F.NOME, F.ID " +
-                                     "HAVING COUNT(*) > ?";
+                                     "GROUP BY F.NOME " +
+                                     "HAVING COUNT(*) > ? )";
         stmt = c.prepareStatement(sql);
         stmt.setInt(1, sup);
         rs = stmt.executeQuery();
@@ -133,7 +133,7 @@ public class FilamentoPerNumEllLumDao {
         Connection c = ds.getConnection();
         String sql = "SELECT * " +
                      "FROM FILAMENTO " +
-                     "WHERE ELLITTICITà >= ? AND ELLITTICITà <= ? ";
+                     "WHERE ellitticita >= ? AND ellitticita <= ? ";
         stmt = c.prepareStatement(sql);
         stmt.setDouble(1, inf);
         stmt.setDouble(2, sup);
