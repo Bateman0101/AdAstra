@@ -39,11 +39,11 @@ public class SatelliteDao extends AbstractDao {
             stmt.executeUpdate();
             c.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("satellite già presente");
         }
     }
 
-    public void insertSatellite(String nome){
+    public void insertSatellite(String nome, Date dataIn){
 
         DataSource ds = new DataSource();
         Connection c = ds.getConnection();
@@ -51,9 +51,10 @@ public class SatelliteDao extends AbstractDao {
         try {
             PreparedStatement stmt;
             String sql = "insert into " + TABLE_NAME + "(" +
-                    COLUMN_NOME +")" +
+                    COLUMN_NOME + "," + COLUMN_DATA_INIZIO+")" +
                     " values(" +
-                    "'" + nome +"')";
+                    "'" + nome +
+                    "'" + ",'" + dataIn+"')";
 
             stmt = c.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             stmt.executeUpdate();

@@ -3,6 +3,7 @@ package control;
 import dao.SatelliteDao;
 import dao.StrumentoDao;
 import entity.Satellite;
+import exceptions.NoSatelliteException;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -18,7 +19,7 @@ public class SatelliteHandler {
 
     }
 
-    public void insertStrumento(String nome, String satellite, String bande) {
+    public void insertStrumento(String nome, String satellite, String bande) throws NoSatelliteException{
 
         StrumentoDao dao = new StrumentoDao();
 

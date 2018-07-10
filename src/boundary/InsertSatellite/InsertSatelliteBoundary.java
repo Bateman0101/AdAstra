@@ -34,6 +34,15 @@ public class InsertSatelliteBoundary {
         }
         ctr.insertSatellite(nome.getText(), startDate.getValue(), endDate.getValue(), agenzia.getText());
 
+        getAlert("Satellite inserito");
+        clear();
+
+    }
+
+    public void clear(){
+
+        nome.clear();
+        agenzia.clear();
     }
 
     public void getAlert(String message){

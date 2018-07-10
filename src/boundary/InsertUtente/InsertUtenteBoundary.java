@@ -2,6 +2,7 @@ package boundary.InsertUtente;
 
 import boundary.Main;
 import control.UtenteHandler;
+import exceptions.NoUserException;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -59,8 +60,25 @@ public class InsertUtenteBoundary {
 
         UtenteHandler ctrl = new UtenteHandler();
 
-        ctrl.insertNewUser(id, nome, cognome, email, password, tipo);
+        try {
+            ctrl.insertNewUser(id, nome, cognome, email, password, tipo);
+            getAlert("Utente inserito");
+            clear();
 
+        }catch (NoUserException e){
+
+            getAlert("Utente già presente nel sistema");
+            clear();
+        }
+
+    }
+    public void clear(){
+
+        idEntry.clear();
+        nomeEntry.clear();
+        cognomeEntry.clear();
+        emailEntry.clear();
+        passwordEntry.clear();
     }
 
     public void getHomePage() {
