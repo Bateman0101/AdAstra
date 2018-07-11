@@ -2,15 +2,11 @@ package Test;
 
 import control.ControllerFil;
 import dao.DataSource;
-import entity.Filamento;
 import exceptions.NoEstremoException;
 import exceptions.NoPerimetroException;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TestDistanzaEstremiDaContorno {
     public static void main(String[] args) {

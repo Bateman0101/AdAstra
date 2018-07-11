@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import boundary.Main;
 import boundary.messenger;
 import control.ControllerFil;
 import entity.Segmento;
@@ -78,6 +80,9 @@ public class Ricerca {
     @FXML // fx:id="back"
     private Button back; // Value injected by FXMLLoader
 
+    @FXML // fx:id="Home"
+    private Button Home; // Value injected by FXMLLoader
+
     @FXML // fx:id="numElements"
     private Text numElements; // Value injected by FXMLLoader
 
@@ -110,6 +115,18 @@ public class Ricerca {
 
     @FXML // fx:id="frazione"
     private Text frazione; // Value injected by FXMLLoader
+
+    @FXML
+    void home() {
+        Main c = new Main();
+        try {
+            c.start(new Stage());
+            Stage stage = (Stage) Home.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void back() {
