@@ -155,7 +155,6 @@ public class FilamentoDao extends AbstractDao {
         catch (SQLException e) {
         e.printStackTrace();
         }
-        System.out.println("LIST SIZE" + list.size());
 
         return list;
     }
@@ -191,7 +190,6 @@ public class FilamentoDao extends AbstractDao {
                 while (rs.next()) {
                     double lat = rs.getDouble("latitudine");
                     double lon = rs.getDouble("longitudine");
-                    System.out.println(lat);
                     p.add(new Punto(lat, lon));
                 }
 
