@@ -103,7 +103,6 @@ public class FilamentoHandler {
         double meanLat = 0;
         for (int i = 0; i < listLat.size(); i++) {
             meanLat += listLat.get(i);
-            System.out.println(Double.toString(listLat.get(i)));
 
         }
         meanLat = meanLat/listLat.size();
@@ -113,8 +112,6 @@ public class FilamentoHandler {
             meanLon += listLon.get(i);
         }
         meanLon = meanLon/listLon.size();
-
-        System.out.println(Double.toString(meanLat));
 
 
         return new Punto(meanLat, meanLon);
@@ -147,8 +144,6 @@ public class FilamentoHandler {
         double maxLon = findMax(listLon);
 
         double distance = Math.hypot(maxLat-minLat, maxLon-minLon);
-
-        System.out.println(Double.toString(distance));
 
         return distance;
 
@@ -192,9 +187,6 @@ public class FilamentoHandler {
     public boolean checkCircle(double clat, double clon, double r, ArrayList<Punto> p) {
 
         for (int i = 0; i < p.size(); i++) {
-
-            System.out.println(Math.hypot(p.get(i).getLatitudine()-clat, p.get(i).getLongitudine()-clon));
-            System.out.println(r);
 
             if (Math.hypot(p.get(i).getLatitudine()-clat, p.get(i).getLongitudine()-clon) > r) {
                 return false;
@@ -307,8 +299,6 @@ public class FilamentoHandler {
         ArrayList<Filamento> l = dao.findAll();
         ArrayList<Filamento> result = new ArrayList<>();
 
-        System.out.println(l.size());
-
         for (int i = 0; i < l.size(); i++) {
 
             ArrayList<Punto> list = dao.findPerimeter(l.get(i).getId(), l.get(i).getSatellite());
@@ -343,7 +333,6 @@ public class FilamentoHandler {
         Vector<Stella> listStar = daoS.getAllStars(con);
         ArrayList<Stella> resultList = new ArrayList<>();
 
-        System.out.println(listPerimeter.size());
         int numPer = 0;
         double result = 0;
         for (int i = 0; i < listStar.size(); i++) {
