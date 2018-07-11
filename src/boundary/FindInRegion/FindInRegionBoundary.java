@@ -109,6 +109,7 @@ public class FindInRegionBoundary {
 
 
                     }
+                    break;
 
                 case "Quadrato":
 
@@ -127,6 +128,7 @@ public class FindInRegionBoundary {
 
                         getAlert("Filamento non presente nel sistema!");
                     }
+                    break;
                 default:
                     break;
 

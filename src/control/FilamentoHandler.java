@@ -270,7 +270,8 @@ public class FilamentoHandler {
 
         for (int i = 0; i < l.size(); i++) {
 
-         ArrayList<Punto> list = dao.findPerimeter(l.get(i).getId(), l.get(i).getSatellite());
+            System.out.println("Check if Filamento : "+ l.get(i).getId()+ "," + l.get(i).getSatellite()+ " is inside region");
+            ArrayList<Punto> list = dao.findPerimeter(l.get(i).getId(), l.get(i).getSatellite());
 
          if (checkSquare(centerLat,centerLon, lato, list)){
              result.add(l.get(i));
@@ -301,6 +302,7 @@ public class FilamentoHandler {
 
         for (int i = 0; i < l.size(); i++) {
 
+            System.out.println("Check if Filamento : "+ l.get(i).getId()+ "," + l.get(i).getSatellite()+ " is inside region");
             ArrayList<Punto> list = dao.findPerimeter(l.get(i).getId(), l.get(i).getSatellite());
 
             if (checkCircle(centerLat,centerLon, radius, list)){
