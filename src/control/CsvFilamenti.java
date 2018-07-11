@@ -60,18 +60,18 @@ public class   CsvFilamenti {
                                 row[5] + " | " + row[6] + " | " + row[4] + " | " + row[8] + " | " + satellite);
                     }else {
                         Filamento filamento = fD.getFilamento(Integer.parseInt(row[0]), satellite, c);
-                        /*
+
                         if (!filamento.getNome().equals(row[1]) ||
                                 !filamento.getFlusso().equals(row[2]) ||
                                 !filamento.getDensita().equals(row[3]) ||
-                                !(filamento.getEllitticita() == Double.parseDouble(row[4])) ||
-                                !(filamento.getContrasto() == Double.parseDouble(row[5])) ||
-                                !(filamento.getTemperatura() == Double.parseDouble(row[6])) ||
-                                !filamento.getStrumento().equals(satellite)){
-                            fD.updateFilamento(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[4]),
-                                    Double.parseDouble(row[5]), Double.parseDouble(row[6]),  satellite, row[8], c);
+                                !(filamento.getEllitticita() == Double.parseDouble(row[5])) ||
+                                !(filamento.getContrasto() == Double.parseDouble(row[6])) ||
+                                !(filamento.getTemperatura() == Double.parseDouble(row[4])) ||
+                                !filamento.getStrumento().equals(row[8])){
+                            fD.updateFilamento(Integer.parseInt(row[0]), row[1], row[2], row[3], Double.parseDouble(row[5]),
+                                    Double.parseDouble(row[6]), Double.parseDouble(row[4]),  satellite, row[8], c);
 
-                        }*/
+                        }
 
 
                         System.out.println("FILAMENTO " + row[0] + " E' GIA' PRESENTE NEL DB");
