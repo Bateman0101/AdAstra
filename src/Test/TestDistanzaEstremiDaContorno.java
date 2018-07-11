@@ -2,6 +2,7 @@ package Test;
 
 import control.ControllerFil;
 import dao.DataSource;
+import dao.DefaultDao;
 import exceptions.NoEstremoException;
 import exceptions.NoPerimetroException;
 import java.sql.Connection;
@@ -14,19 +15,11 @@ public class TestDistanzaEstremiDaContorno {
             Statement stmt;
             DataSource ds = new DataSource();
             Connection c = ds.getConnection();
-            String sql = "DELETE FROM PUNTO_SEGMENTO";
+            DefaultDao db = new DefaultDao();
+            db.insertSampleData();
             stmt = c.createStatement();
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM SEGMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM PERIMETRO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM FILAMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM PUNTO";
-            stmt.executeUpdate(sql);
             //Inserimento PUNTI di prova
-            sql = "INSERT INTO PUNTO VALUES(-1.26132,13.4513)";
+            String sql = "INSERT INTO PUNTO VALUES(-1.26132,13.4513)";
             stmt.executeUpdate(sql);
             sql = "INSERT INTO PUNTO  VALUES(-0.93522,7.88213)";
             stmt.executeUpdate(sql);
@@ -86,20 +79,7 @@ public class TestDistanzaEstremiDaContorno {
             System.out.println("Distanze trovate:");
             System.out.println("dist inf = " + dist[0] + " | " + "dist sup = " + dist[1]);
             //Pulizia DataBase dopo il test
-            c = ds.getConnection();
-            sql = "DELETE FROM PUNTO_SEGMENTO";
-            stmt = c.createStatement();
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM SEGMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM PERIMETRO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM FILAMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM PUNTO";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            c.close();
+            db.insertSampleData();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NoEstremoException e) {

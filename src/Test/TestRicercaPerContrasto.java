@@ -2,6 +2,7 @@ package Test;
 
 import control.ControllerFil;
 import dao.DataSource;
+import dao.DefaultDao;
 import entity.Filamento;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,15 +14,12 @@ public class TestRicercaPerContrasto {
     public static void main(String[] args) {
         try {
             Statement stmt;
+            String sql;
             DataSource ds = new DataSource();
             Connection c = ds.getConnection();
-            String sql = "DELETE FROM PUNTO_SEGMENTO";
             stmt = c.createStatement();
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM SEGMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM FILAMENTO";
-            stmt.executeUpdate(sql);
+            DefaultDao db = new DefaultDao();
+            db.insertSampleData();
             //Inserimento 4 FILAMENTI di prova
             sql = "INSERT INTO FILAMENTO VALUES(1,'A','','',0.0,1.14789,0.0,'PACS','Herschel')";
             stmt.executeUpdate(sql);
@@ -89,16 +87,7 @@ public class TestRicercaPerContrasto {
                 System.out.println("ERRORE!!");
             }
             //Pulizia DataBase dopo il test
-            c = ds.getConnection();
-            sql = "DELETE FROM PUNTO_SEGMENTO";
-            stmt = c.createStatement();
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM SEGMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM FILAMENTO";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            c.close();
+            db.insertSampleData();
         } catch (SQLException e) {
             e.printStackTrace();
         }

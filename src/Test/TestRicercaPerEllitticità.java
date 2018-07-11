@@ -2,6 +2,7 @@ package Test;
 
 import control.ControllerFil;
 import dao.DataSource;
+import dao.DefaultDao;
 import entity.Filamento;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,13 +16,10 @@ public class TestRicercaPerEllitticità {
             Statement stmt;
             DataSource ds = new DataSource();
             Connection c = ds.getConnection();
-            String sql = "DELETE FROM PUNTO_SEGMENTO";
+            String sql;
             stmt = c.createStatement();
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM SEGMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM FILAMENTO";
-            stmt.executeUpdate(sql);
+            DefaultDao db = new DefaultDao();
+            db.insertSampleData();
             //Inserimento 4 FILAMENTI di prova
             sql = "INSERT INTO FILAMENTO VALUES(1,'A','','',1.88679,0.0,0.0,'PACS','Herschel')";
             stmt.executeUpdate(sql);
@@ -93,16 +91,7 @@ public class TestRicercaPerEllitticità {
                 System.out.println("ERRORE!!");
             }
             //Pulizia DataBase dopo il test
-            c = ds.getConnection();
-            sql = "DELETE FROM PUNTO_SEGMENTO";
-            stmt = c.createStatement();
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM SEGMENTO";
-            stmt.executeUpdate(sql);
-            sql = "DELETE FROM FILAMENTO";
-            stmt.executeUpdate(sql);
-            stmt.close();
-            c.close();
+            db.insertSampleData();
         } catch (SQLException e) {
             e.printStackTrace();
         }
