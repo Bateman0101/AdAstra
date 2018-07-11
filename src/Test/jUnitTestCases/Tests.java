@@ -24,6 +24,9 @@ public class Tests {
     public void insertSampleData() {
 
 
+            DefaultDao defaultDao = new DefaultDao();
+            defaultDao.deleteAll();
+
             DataSource dS = new DataSource();
             Connection c = dS.getConnection();
             StrumentoDao strumDao = new StrumentoDao();
@@ -34,8 +37,6 @@ public class Tests {
             PuntoDao pDao = new PuntoDao();
             StellaDao stellaDao = new StellaDao();
 
-            if (filDao.isPresentFilamento(1, "Spitzer", c))
-                return;
 
                 Date date = Date.valueOf("2016-07-09");
                 satDao.insertSatellite("Spitzer", date);
@@ -81,6 +82,9 @@ public class Tests {
             e.printStackTrace();
         }
 
+        DefaultDao defaultDao = new DefaultDao();
+        defaultDao.deleteAll();
+
     }
 
     @Test
@@ -100,6 +104,9 @@ public class Tests {
             e.printStackTrace();
         }
 
+        DefaultDao defaultDao = new DefaultDao();
+        defaultDao.deleteAll();
+
     }
 
     @Test
@@ -114,6 +121,9 @@ public class Tests {
         }catch(NoFilamentoException e){
             e.printStackTrace();
         }
+
+        DefaultDao defaultDao = new DefaultDao();
+        defaultDao.deleteAll();
     }
 
 }
